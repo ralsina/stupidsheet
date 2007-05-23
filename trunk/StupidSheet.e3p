@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Project SYSTEM "Project-3.5.dtd">
+<!-- Project file for project StupidSheet -->
+<!-- Saved: 2004-12-15, 18:06:06 -->
+<!-- Copyright (C) 2004 Roberto Alsina, ralsina@kde.org -->
+<Project version="3.5">
+  <Description>A Stupid SpreadSheet</Description>
+  <Version>0.1</Version>
+  <Author>Roberto Alsina</Author>
+  <Email>ralsina@kde.org</Email>
+  <Sources>
+    <Source>
+      <Name>ssheet.py</Name>
+    </Source>
+    <Source>
+      <Dir>ssheet</Dir>
+      <Name>engine.py</Name>
+    </Source>
+    <Source>
+      <Dir>ssheet</Dir>
+      <Name>window.py</Name>
+    </Source>
+    <Source>
+      <Dir>ssheet</Dir>
+      <Name>__init__.py</Name>
+    </Source>
+    <Source>
+      <Dir>ssheet</Dir>
+      <Name>opensave.py</Name>
+    </Source>
+    <Source>
+      <Name>setup.py</Name>
+    </Source>
+    <Source>
+      <Dir>ssheet</Dir>
+      <Name>windowbase.py</Name>
+    </Source>
+  </Sources>
+  <Forms>
+    <Form>
+      <Dir>ssheet</Dir>
+      <Name>windowbase.ui</Name>
+    </Form>
+  </Forms>
+  <Translations>
+  </Translations>
+  <Interfaces>
+  </Interfaces>
+  <Others>
+  </Others>
+  <MainScript>
+    <Name>ssheet.py</Name>
+  </MainScript>
+  <Vcs>
+    <VcsType>CVS</VcsType>
+    <VcsOptions>{'status': ['-v'], 'log': [''], 'global': ['-f'], 'update': ['-dP'], 'remove': ['-f'], 'add': [''], 'tag': ['-c'], 'export': [''], 'diff': ['-u3', '-p'], 'commit': [''], 'checkout': [''], 'history': ['-e', '-a']}</VcsOptions>
+    <VcsOtherData>{}</VcsOtherData>
+  </Vcs>
+</Project>
