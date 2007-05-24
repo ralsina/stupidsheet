@@ -92,7 +92,17 @@
          <number>6</number>
         </property>
         <item>
-         <widget class="QTableWidget" name="grid" />
+         <widget class="QTableWidget" name="grid" >
+          <property name="editTriggers" >
+           <set>QAbstractItemView::NoEditTriggers</set>
+          </property>
+          <property name="dragDropOverwriteMode" >
+           <bool>false</bool>
+          </property>
+          <property name="alternatingRowColors" >
+           <bool>true</bool>
+          </property>
+         </widget>
         </item>
        </layout>
       </widget>
