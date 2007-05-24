@@ -4,31 +4,54 @@ from traxcompiler import compile
 
 from PyQt4 import QtGui, QtCore
 
+from graph_lib import *
+
 class SpreadSheet(QtCore.QObject):
     def __init__(self,parent):
         QtCore.QObject.__init__(self,parent)
     _cells = {}
-    _deps = {}
-    tools = {}  
+    tools = {}
+    graph=Graph()
     def __setitem__(self, key, formula):
         key=key.lower()
         c=compile('%s=%s;'%(key,formula))
-        self._cells[key] = c[key][0]
-        print c
-        self.emit(QtCore.SIGNAL('changed'),(key))
+        self._cells[key] = [c[key][0],False]
+
+        # Dependency graph
+        if not self.graph.has_node(key):
+                self.graph.add_node(key)
+        for edge in self.graph.in_arcs(key):
+                self.graph.delete_edge(edge)
+        for cell in c[key][1]:
+                self.graph.add_edge(cell,key)
+        try:
+                print 'GRAPH(TOPO): ',self.graph.topological_sort()
+                self._cells[key][1]=False
+                print 'GRAPH(BFS) : ',self.graph.bfs(key)
+        except Graph_topological_error:
+                # We made the graph cyclic
+                # So, mark this cell as evil
+                self._cells[key][1]=True
+                # And remove all incoming edges to go back to
+                # status quo
+                for edge in self.graph.in_arcs(key):
+                        self.graph.delete_edge(edge)
+        #self.emit(QtCore.SIGNAL('changed'),(key))
+
     def getformula(self, key):
         key=key.lower()
-        return self._cells[key]
+        return self._cells[key][0]
     def __getitem__(self, key ):
         print self._cells[key]
-        return eval(self._cells[key], self.tools, self)
+        if self._cells[key][1]:
+                return "ERROR: cyclic dependency"
+        else:
+                return eval(self._cells[key][0], self.tools, self)
 
 def isKey(key):
     if (key[0].isalpha() and key[1:].isdigit()) or (key[0:1].isalpha() and key[2:].isdigit()):
         return True
     return False
-
-
 
 def coordKey(x,y):
     if x< 26:
