@@ -18,7 +18,7 @@ class SpreadSheet(QtCore.QObject):
         self.emit(QtCore.SIGNAL('changed'),(key))
     def getformula(self, key):
         key=key.lower()
-        return self._cells[key][1]
+        return self._cells[key]
     def __getitem__(self, key ):
         print self._cells[key]
         return eval(self._cells[key], self.tools, self)
