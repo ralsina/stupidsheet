@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '/mnt/centos/home/ralsina/Desktop/proyectos/StupidSheet/stupidsheet/ssheet/windowbase.ui'
+# Form implementation generated from reading ui file 'ssheet/windowbase.ui'
 #
-# Created: Wed May 23 20:32:12 2007
+# Created: Wed May 23 21:57:05 2007
 #      by: PyQt4 UI code generator 4.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -63,6 +63,9 @@ class Ui_WindowBase(object):
         self.vboxlayout1.setObjectName("vboxlayout1")
 
         self.grid = QtGui.QTableWidget(self.tab)
+        self.grid.setEditTriggers(QtGui.QAbstractItemView.NoEditTriggers)
+        self.grid.setDragDropOverwriteMode(False)
+        self.grid.setAlternatingRowColors(True)
         self.grid.setObjectName("grid")
         self.vboxlayout1.addWidget(self.grid)
         self.tabWidget2.addTab(self.tab,"")
@@ -215,13 +218,3 @@ class Ui_WindowBase(object):
         self.helpAboutAction.setText(QtGui.QApplication.translate("WindowBase", "&About", None, QtGui.QApplication.UnicodeUTF8))
         self.helpAboutAction.setIconText(QtGui.QApplication.translate("WindowBase", "About", None, QtGui.QApplication.UnicodeUTF8))
 
-
-
-if __name__ == "__main__":
-    import sys
-    app = QtGui.QApplication(sys.argv)
-    WindowBase = QtGui.QMainWindow()
-    ui = Ui_WindowBase()
-    ui.setupUi(WindowBase)
-    WindowBase.show()
-    sys.exit(app.exec_())

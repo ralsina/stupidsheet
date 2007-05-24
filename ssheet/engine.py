@@ -4,18 +4,19 @@ import sys
 
 from PyQt4 import QtGui, QtCore
 
-class SpreadSheet:
+class SpreadSheet(QtCore.QObject):
+    def __init__(self,parent):
+        QtCore.QObject.__init__(self,parent)
     _cells = {}
     tools = {}  
     def __setitem__(self, key, formula):
         self._cells[key] = formula
+        self.emit(QtCore.SIGNAL('changed'),(key))
+        print key
     def getformula(self, key):
         return self._cells[key]
     def __getitem__(self, key ):
-        v=eval(self._cells[key], self.tools, self)
-        print v
-        return v
-
+        return eval(self._cells[key], self.tools, self)
 
 def isKey(key):
     if (key[0].isalpha() and key[1:].isdigit()) or (key[0:1].isalpha() and key[2:].isdigit()):

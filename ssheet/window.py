@@ -28,11 +28,23 @@ class Window(QtGui.QMainWindow):
             for j in range (0,26):
                 labels.append(chr(97+i)+chr(97+j))
         self.ui.grid.setHorizontalHeaderLabels (labels)
-        self.sheet=engine.SpreadSheet()
+        self.sheet=engine.SpreadSheet(self)
         self.editing=None
-        
         self.fname=None
-        
+
+        QtCore.QObject.connect(self.ui.grid,
+                               QtCore.SIGNAL('cellDoubleClicked(int,int)'),
+                               self.clickedGrid)
+        QtCore.QObject.connect(self.ui.cancelFormula,
+                               QtCore.SIGNAL('clicked()'),
+                               self.cancelFormulaSlot)
+        QtCore.QObject.connect(self.ui.saveFormula,
+                               QtCore.SIGNAL('clicked()'),
+                               self.saveFormulaSlot)
+        QtCore.QObject.connect(self.sheet,
+                               QtCore.SIGNAL('changed'),
+                               self.changeCell)
+
     def fileSaveAs(self):
         data=pickle.dumps(self.sheet._cells)
         (status,key,fname)=opensave.saveAsFile(data)
@@ -55,33 +67,40 @@ class Window(QtGui.QMainWindow):
             self.sheet[key]=cells[key]
             self.changeCell(key,self.sheet[key])
         
-    def changeCell(self,key,value):
-        print key,value
+    def changeCell(self,key):
+        print 'changing: ',key
         (x,y)=keyCoord(key)
-        self.ui.grid.setText(y,x,str(value))
+        print x,y
+        item=self.ui.grid.item(y,x)
+        if not item:
+            item=QtGui.QTableWidgetItem('XXX')
+            self.ui.grid.setItem(y,x,item)
+        item.setText(str(self.sheet[key]))
         
-    def clickedGrid(self,row, col, button, mousePos):
+    def clickedGrid(self,row, col):
+        print "ClickedGrid"
         h=self.ui.grid.horizontalHeader()
-        label=str(h.label(col))+str(row+1)
+        label=coordKey(col,row)
         self.editing=label
-        self.cellName.setText(label)
+        self.ui.cellName.setText(label)
         try:
             f=self.sheet.getformula(label)
         except KeyError:
             f=''
-        self.formula.setText(f)
-        self.saveFormula.setEnabled(True)
-        self.cancelFormula.setEnabled(True)
-        self.formula.setFocus()
+        self.ui.formula.setText(f)
+        self.ui.saveFormula.setEnabled(True)
+        self.ui.cancelFormula.setEnabled(True)
+        self.ui.formula.setFocus()
         
     def saveFormulaSlot(self):
-        self.sheet[self.editing]=str(self.formula.text())
-        self.saveFormula.setEnabled(False)
-        self.cancelFormula.setEnabled(False)
-        self.cellName.setText("")
-        self.changeCell(self.editing,self.sheet[self.editing])
-        self.sheet.reCalculate(self.editing)
+        self.sheet[self.editing]=str(self.ui.formula.text())
+        self.ui.saveFormula.setEnabled(False)
+        self.ui.cancelFormula.setEnabled(False)
+        self.ui.cellName.setText("")
+        self.changeCell(self.editing)
 
+    def cancelFormulaSlot(self):
+        print "cancelFormulaSlot"
         
     def fileExit(self):
         self.close()
