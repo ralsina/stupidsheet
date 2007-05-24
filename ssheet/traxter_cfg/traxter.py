@@ -16,6 +16,7 @@ equal     = Operator('=', 'equal')
 colon     = Operator(':', 'colon')
 comma     = Operator(',', 'comma')
 semicolon = Operator(';', 'semicolon')
+absolute  = Operator('$', 'absolute')
 lpar = Bracket('(', 'lpar')
 rpar = Bracket(')', 'rpar')
 label = Identifier
@@ -28,6 +29,7 @@ TERM       = 'TERM'
 ASSIGNMENT = 'ASSIGNMENT'
 ARG        = 'ARG'
 LIST       = 'LIST'
+CELLREF    = 'CELLREF'
 FUNCALL    = 'FUNCALL'
 RANGE      = 'RANGE'
 EXPR       = 'EXPR'
@@ -57,7 +59,7 @@ rules = \
             [
                 ([RANGE], '$1'), 
                 ([EXPR], '$1'), 
-                ([label], '$1'), 
+                ([CELLREF], '$1'), 
             ],
         LIST: 
             [
@@ -65,13 +67,20 @@ rules = \
                 ([ASSIGNMENT, semicolon, LIST], '[$1]+$3'), 
                 ([ASSIGNMENT, semicolon], '[$1]'), 
             ],
+        CELLREF: 
+            [
+                ([absolute, label], '(\'cellref\',\'ABS\',$2.symbolic_name)'), 
+                ([label, absolute, number], '(\'cellref\',$1.symbolic_name,\'ABS\',str(int($3)))'), 
+                ([label], '(\'cellref\',$1.symbolic_name)'), 
+                ([absolute, label, absolute, number], '(\'cellref\',\'ABS\',$2.symbolic_name,\'ABS\',str(int($4)))'), 
+            ],
         FUNCALL: 
             [
                 ([label, lpar, ARGLIST, rpar], '(\'funcall\',$1,$3)'), 
             ],
         RANGE: 
             [
-                ([label, colon, label], '(\'range\',$1,$3)'), 
+                ([CELLREF, colon, CELLREF], '(\'range\',$1,$3)'), 
             ],
         EXPR: 
             [
@@ -87,9 +96,9 @@ rules = \
         FACTOR: 
             [
                 ([number], '$1.val()'), 
+                ([CELLREF], '$1'), 
                 ([lpar, EXPR, rpar], '(\'group\',$2)'), 
                 ([FUNCALL], '$1'), 
-                ([label], '$1'), 
                 ([minus, FACTOR], '-$2'), 
             ],
     }

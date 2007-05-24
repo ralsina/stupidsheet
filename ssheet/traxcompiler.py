@@ -23,9 +23,12 @@ def funcOp(*args):
                          ','.join([compile_token(a) for a in args[1]]))
 
 def rangeOp(*args):
-        c1=args[0].symbolic_name
-        c2=args[1].symbolic_name
+        c1=compile_token(args[0])
+        c2=compile_token(args[1])
         return ','.join([compile_token(a) for a in cellutils.cellrange(c1,c2)])
+def cellOp(*args):
+        #FIXME this is simplistic for testing
+        return compile_token(aperiot.lexer.Identifier(''.join(args).replace('ABS','')))
 
 operators={'+':addOp,
            '-':subOp,
@@ -33,7 +36,8 @@ operators={'+':addOp,
            '/':divOp,
            'group':groupOp,
            'funcall':funcOp,
-           'range':rangeOp
+           'range':rangeOp,
+           'cellref':cellOp
            }
 
 
@@ -67,6 +71,10 @@ def compile(source):
 
 if __name__=="__main__":
 
+        t='A1=$A$1'
+        pprint (compile(t))
+        print
+        print
         t='A1=SUM(A1:A7)*2;A3=2+2;'
         pprint (compile(t))
 
