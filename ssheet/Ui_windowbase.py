@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'ssheet/windowbase.ui'
+# Form implementation generated from reading ui file 'windowbase.ui'
 #
-# Created: Wed May 23 21:57:05 2007
+# Created: Thu May 24 18:01:27 2007
 #      by: PyQt4 UI code generator 4.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -29,13 +29,13 @@ class Ui_WindowBase(object):
 
         self.saveFormula = QtGui.QToolButton(self.widget)
         self.saveFormula.setEnabled(False)
-        self.saveFormula.setIcon(QtGui.QIcon("image0"))
+        self.saveFormula.setIcon(QtGui.QIcon(":/icons/endturn.svg"))
         self.saveFormula.setObjectName("saveFormula")
         self.hboxlayout.addWidget(self.saveFormula)
 
         self.cancelFormula = QtGui.QToolButton(self.widget)
         self.cancelFormula.setEnabled(False)
-        self.cancelFormula.setIcon(QtGui.QIcon("image1"))
+        self.cancelFormula.setIcon(QtGui.QIcon(":/icons/editdelete.svg"))
         self.cancelFormula.setObjectName("cancelFormula")
         self.hboxlayout.addWidget(self.cancelFormula)
 
@@ -218,3 +218,4 @@ class Ui_WindowBase(object):
         self.helpAboutAction.setText(QtGui.QApplication.translate("WindowBase", "&About", None, QtGui.QApplication.UnicodeUTF8))
         self.helpAboutAction.setIconText(QtGui.QApplication.translate("WindowBase", "About", None, QtGui.QApplication.UnicodeUTF8))
 
+import icons_rc
