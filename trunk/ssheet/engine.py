@@ -28,6 +28,8 @@ class SpreadSheet(QtCore.QObject):
                 print 'GRAPH(TOPO): ',self.graph.topological_sort()
                 self._cells[key][1]=False
                 print 'GRAPH(BFS) : ',self.graph.bfs(key)
+                for cell in self.graph.bfs(key)[1:]:
+                        self.emit(QtCore.SIGNAL('changed'),(cell))
         except Graph_topological_error:
                 # We made the graph cyclic
                 # So, mark this cell as evil
@@ -36,7 +38,6 @@ class SpreadSheet(QtCore.QObject):
                 # status quo
                 for edge in self.graph.in_arcs(key):
                         self.graph.delete_edge(edge)
-        #self.emit(QtCore.SIGNAL('changed'),(key))
 
     def getformula(self, key):
         key=key.lower()
