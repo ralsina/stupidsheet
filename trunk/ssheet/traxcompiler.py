@@ -53,9 +53,10 @@ def compile_assignment(tokens):
 
 
 def compile(source):
+    global dependencies
     compiled={}
     myparser = build_parser('traxter')
-    assign_list=myparser.parse(t)
+    assign_list=myparser.parse(source)
     for assignment in assign_list:
             dependencies=set()
             var,c=compile_assignment(assignment)
