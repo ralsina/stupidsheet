@@ -1,0 +1,60 @@
+# This is a simple language for arithmetic expressions 
+
+numbers 
+     number 
+   
+operators 
+     plus   "+" 
+     times  "*" 
+     minus  "-" 
+     div    "/" 
+     equal  "="
+     colon ":"
+     comma ","
+     semicolon ";"
+
+brackets 
+     lpar  "(" 
+     rpar  ")" 
+
+
+identifiers
+     label
+
+start 
+     LIST
+        
+rules 
+
+LIST             -> ASSIGNMENT                : "[$1]"
+                  | ASSIGNMENT semicolon LIST : "[$1]+$3"
+                  | ASSIGNMENT semicolon : "[$1]"
+
+ASSIGNMENT       -> label equal EXPR : "($1,$3)"
+
+ARGLIST          -> ARG comma ARGLIST : "[$1]+$3"
+                  | ARG          : "[$1]"
+
+ARG              -> RANGE       : "$1"
+                  | EXPR        : "$1"
+                  | label       : "$1"
+
+EXPR             -> TERM              : "$1" 
+                  | TERM plus EXPR    : "(\'+\',$1,$3)"
+                  | TERM minus EXPR   : "(\'-\',$1,$3)" 
+   
+TERM             -> FACTOR               : "$1" 
+                  | FACTOR times TERM    : "(\'*\',$1,$3)"
+                  | FACTOR div TERM      : "(\'/\',$1,$3)"
+
+   
+FACTOR           -> number           : "$1.val()"
+                  | lpar EXPR rpar  : "(\'group\',$2)"
+                  | FUNCALL	   : "$1"
+                  | label    	   : "$1"
+                  | minus FACTOR    : "-$2" 
+         
+FUNCALL          ->  label lpar ARGLIST rpar : "(\'funcall\',$1,$3)"
+         
+RANGE            -> label colon label   : "(\'range\',$1,$3)"
+
