@@ -1,19 +1,15 @@
 #!/usr/bin/env python
 
 import sys
-from qt import *
+from PyQt4 import QtCore, QtGui
 
-import ssheet.window
+from ssheet.window import Window
 
 def main(args):
-        app=QApplication(args)
-
-        win=ssheet.window.Window()
-        app.setMainWidget(win)
-        win.show()
-        app.connect(app, SIGNAL("lastWindowClosed()"), 
-                    app, SLOT("quit()"))
-        app.exec_loop()
+    app=QtGui.QApplication(sys.argv)
+    window=Window()
+    window.show()
+    sys.exit(app.exec_())
 
 if __name__=="__main__":
         main(sys.argv)

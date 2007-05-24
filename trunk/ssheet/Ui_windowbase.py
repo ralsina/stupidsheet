@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '/mnt/centos/home/ralsina/Desktop/proyectos/StupidSheet/stupidsheet/ssheet/windowbase.ui'
 #
-# Created: Wed May 23 20:29:00 2007
+# Created: Wed May 23 20:32:12 2007
 #      by: PyQt4 UI code generator 4.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -15,7 +15,6 @@ class Ui_WindowBase(object):
         WindowBase.resize(QtCore.QSize(QtCore.QRect(0,0,600,480).size()).expandedTo(WindowBase.minimumSizeHint()))
 
         self.widget = QtGui.QWidget(WindowBase)
-        self.widget.setGeometry(QtCore.QRect(0,29,600,451))
         self.widget.setObjectName("widget")
 
         self.vboxlayout = QtGui.QVBoxLayout(self.widget)
@@ -63,9 +62,9 @@ class Ui_WindowBase(object):
         self.vboxlayout1.setSpacing(6)
         self.vboxlayout1.setObjectName("vboxlayout1")
 
-        self.tableWidget = QtGui.QTableWidget(self.tab)
-        self.tableWidget.setObjectName("tableWidget")
-        self.vboxlayout1.addWidget(self.tableWidget)
+        self.grid = QtGui.QTableWidget(self.tab)
+        self.grid.setObjectName("grid")
+        self.vboxlayout1.addWidget(self.grid)
         self.tabWidget2.addTab(self.tab,"")
         self.vboxlayout.addWidget(self.tabWidget2)
         WindowBase.setCentralWidget(self.widget)
@@ -168,9 +167,9 @@ class Ui_WindowBase(object):
 
     def retranslateUi(self, WindowBase):
         WindowBase.setWindowTitle(QtGui.QApplication.translate("WindowBase", "Form1", None, QtGui.QApplication.UnicodeUTF8))
-        self.tableWidget.clear()
-        self.tableWidget.setColumnCount(0)
-        self.tableWidget.setRowCount(0)
+        self.grid.clear()
+        self.grid.setColumnCount(0)
+        self.grid.setRowCount(0)
         self.tabWidget2.setTabText(self.tabWidget2.indexOf(self.tab), QtGui.QApplication.translate("WindowBase", "Page 1", None, QtGui.QApplication.UnicodeUTF8))
         self.fileMenu.setTitle(QtGui.QApplication.translate("WindowBase", "&File", None, QtGui.QApplication.UnicodeUTF8))
         self.editMenu.setTitle(QtGui.QApplication.translate("WindowBase", "&Edit", None, QtGui.QApplication.UnicodeUTF8))
