@@ -27,6 +27,7 @@ def rangeOp(*args):
         c2=compile_token(args[1])
         return ','.join([compile_token(a) for a in cellutils.cellrange(c1,c2)])
 def cellOp(*args):
+        print args
         #FIXME this is simplistic for testing
         return compile_token(aperiot.lexer.Identifier(''.join(args).replace('ABS','')))
 
@@ -71,11 +72,15 @@ def compile(source):
 
 if __name__=="__main__":
 
-        t='A1=$A$1'
+        t='A1=A$3'
         pprint (compile(t))
         print
         print
         t='A1=SUM(A1:A7)*2;A3=2+2;'
+        pprint (compile(t))
+        print
+        print
+        t='A1=SUM(AVG(A1:A7))*2;A3=2+2;'
         pprint (compile(t))
 
 
