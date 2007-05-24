@@ -13,14 +13,6 @@
    <string>Form1</string>
   </property>
   <widget class="QWidget" name="widget" >
-   <property name="geometry" >
-    <rect>
-     <x>0</x>
-     <y>29</y>
-     <width>600</width>
-     <height>451</height>
-    </rect>
-   </property>
    <layout class="QVBoxLayout" >
     <property name="margin" >
      <number>11</number>
@@ -100,7 +92,7 @@
          <number>6</number>
         </property>
         <item>
-         <widget class="QTableWidget" name="tableWidget" />
+         <widget class="QTableWidget" name="grid" />
         </item>
        </layout>
       </widget>
@@ -353,14 +345,6 @@
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11" />
- <customwidgets>
-  <customwidget>
-   <class>QMainWindow</class>
-   <extends>QWidget</extends>
-   <header>qmainwindow.h</header>
-   <container>1</container>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections>
   <connection>
