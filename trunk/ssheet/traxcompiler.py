@@ -57,7 +57,7 @@ def compile_assignment(tokens):
         return target,compiled
 
 
-def compile(source):
+def traxcompile(source):
     global dependencies
     compiled={}
     myparser = build_parser('traxter')

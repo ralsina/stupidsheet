@@ -1,6 +1,6 @@
 import math
 import sys
-from traxcompiler import compile
+from traxcompiler import traxcompile
 from PyQt4 import QtGui, QtCore
 from graph_lib import *
 
@@ -19,8 +19,8 @@ class SpreadSheet(QtCore.QObject):
 
     def __setitem__(self, key, formula):
         key=key.lower()
-        c=compile('%s=%s;'%(key,formula))
-        self._cells[key] = [c[key][0],False]
+        c=traxcompile('%s=%s;'%(key,formula))
+        self._cells[key] = [c[key][0],False,compile(c[key][0],"Formula for %s"%key,'eval')]
 
         # Dependency graph
         if not self.graph.has_node(key):
@@ -53,7 +53,7 @@ class SpreadSheet(QtCore.QObject):
                 return "ERROR: cyclic dependency"
         else:
                 print 'evaluating [%s]: '%key,type(self._cells[key][0]),self._cells[key][0]
-                return eval(str(self._cells[key][0]), self.tools, self)
+                return eval(self._cells[key][0], self.tools, self)
 
 def isKey(key):
     if (key[0].isalpha() and key[1:].isdigit()) or (key[0:1].isalpha() and key[2:].isdigit()):
