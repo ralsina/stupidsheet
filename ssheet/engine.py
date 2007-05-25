@@ -1,17 +1,22 @@
 import math
 import sys
 from traxcompiler import compile
-
 from PyQt4 import QtGui, QtCore
-
 from graph_lib import *
 
+import functions
+
 class SpreadSheet(QtCore.QObject):
-    def __init__(self,parent):
-        QtCore.QObject.__init__(self,parent)
     _cells = {}
     tools = {}
     graph=Graph()
+
+    def __init__(self,parent):
+        QtCore.QObject.__init__(self,parent)
+        for name in dir(functions):
+                self.tools[name]=eval('functions.'+name)
+                
+
     def __setitem__(self, key, formula):
         key=key.lower()
         c=compile('%s=%s;'%(key,formula))
@@ -47,7 +52,8 @@ class SpreadSheet(QtCore.QObject):
         if self._cells[key][1]:
                 return "ERROR: cyclic dependency"
         else:
-                return eval(self._cells[key][0], self.tools, self)
+                print 'evaluating [%s]: '%key,type(self._cells[key][0]),self._cells[key][0]
+                return eval(str(self._cells[key][0]), self.tools, self)
 
 def isKey(key):
     if (key[0].isalpha() and key[1:].isdigit()) or (key[0:1].isalpha() and key[2:].isdigit()):
