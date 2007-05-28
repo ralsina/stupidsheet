@@ -41,7 +41,7 @@ def cellrange(start,end):
     ec,er=keyCoord(end)
 
     res=[]
-    for col in xrange(sc,ec):
+    for col in xrange(sc,ec+1):
         for row in xrange(sr,er+1):
                 res.append(lexer.Identifier(coordKey(col,row)))
 
