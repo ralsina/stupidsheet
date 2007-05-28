@@ -43,6 +43,6 @@ def cellrange(start,end):
     res=[]
     for col in xrange(sc,ec):
         for row in xrange(sr,er+1):
-                res.append(lexer.Identifier(coordKey(col)+str(row)))
+                res.append(lexer.Identifier(coordKey(col,row)))
 
     return res
