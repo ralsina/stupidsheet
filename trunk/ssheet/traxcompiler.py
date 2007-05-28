@@ -71,8 +71,9 @@ def traxcompile(source):
 
 if __name__=="__main__":
 
-        t='A1=SUM(A1:A7)*2;A3=2+2;'
+        t='A1=SUM(A1:A7);'
         pprint (traxcompile(t))
+        sys.exit(1)
         print
         print
         t='A1=SUM(AVG(A1:A7))*2;'
