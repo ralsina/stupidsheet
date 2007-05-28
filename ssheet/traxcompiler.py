@@ -5,6 +5,7 @@ import cellutils
 import sys
 
 dependencies=set()
+currentKey=None
 
 def addOp(*args):
         return '+'.join([compile_token(a) for a in args])
@@ -51,9 +52,10 @@ def compile_token(token):
         return str(token)
 
 def compile_assignment(tokens):
-        target=tokens[0].symbolic_name
+        global currentKey
+        currentKey=tokens[0].symbolic_name
         compiled=compile_token(tokens[1])
-        return target,compiled
+        return currentKey,compiled
 
 
 def traxcompile(source):
