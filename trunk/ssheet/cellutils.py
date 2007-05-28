@@ -15,7 +15,8 @@ def coordKey(x,y):
     return key
     
     
-def keyCoord(key):      
+def keyCoord(key):
+    print "keyCoord: ",key
     if key[1].isalpha():
         x=(ord(key[0])-97)*26+ord(key[1])-97
         y=int(key[2:])-1
@@ -36,11 +37,11 @@ def splitcell(cname):
     return col,int(row)
 
 def cellrange(start,end):
-    sc,sr=splitcell(start)
-    ec,er=splitcell(end)
+    sc,sr=keyCoord(start)
+    ec,er=keyCoord(end)
 
     res=[]
-    for col in xrange(keyCoord(sc),col2num(ec)+1):
+    for col in xrange(sc,ec):
         for row in xrange(sr,er+1):
                 res.append(lexer.Identifier(coordKey(col)+str(row)))
 

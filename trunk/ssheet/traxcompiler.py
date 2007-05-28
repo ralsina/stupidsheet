@@ -41,7 +41,6 @@ operators={'+':addOp,
            'cellref':cellOp
            }
 
-
 def compile_token(token):
         if isinstance (token,aperiot.lexer.Identifier):
                 v=token.symbolic_name.lower()
