@@ -46,7 +46,7 @@ def compile_token(token):
                 v=token.symbolic_name.lower()
                 dependencies.add(v)
                 return v
-        if isinstance(token,list) or isinstance(token,tuple):
+        if isinstance(token,list):
             return apply(operators[token[0]],token[1:])
         return str(token)
 
