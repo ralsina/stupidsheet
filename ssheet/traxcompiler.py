@@ -72,15 +72,16 @@ def traxcompile(source):
 
 if __name__=="__main__":
 
-        t='A1=A$3'
-        pprint (compile(t))
-        print
-        print
         t='A1=SUM(A1:A7)*2;A3=2+2;'
-        pprint (compile(t))
+        pprint (traxcompile(t))
         print
         print
-        t='A1=SUM(AVG(A1:A7))*2;A3=2+2;'
-        pprint (compile(t))
+        t='A1=SUM(AVG(A1:A7))*2;'
+        pprint (traxcompile(t))
+        print
+        print
+        t='A1=$A1+A$1+$A$1+A1;'
+        pprint (traxcompile(t))
+
 
 
