@@ -1,7 +1,7 @@
 from pprint import pprint
 from aperiot.parsergen import build_parser
 import aperiot
-import cellutils
+from cellutils import *
 import sys
 
 dependencies=set()
@@ -26,11 +26,14 @@ def funcOp(*args):
 def rangeOp(*args):
         c1=compile_token(args[0])
         c2=compile_token(args[1])
-        return ','.join([compile_token(a) for a in cellutils.cellrange(c1,c2)])
+        return ','.join([compile_token(a) for a in cellrange(c1,c2)])
 def cellOp(*args):
-        print args
-        #FIXME this is simplistic for testing
-        return compile_token(aperiot.lexer.Identifier(''.join(args).replace('ABS','')))
+        print 'cell: ',args
+        x,y=keyCoord(currentKey)
+        return ''.join([compile_token(a) for a in args])
+def elemOp(*args):
+        return str(args[0])
+
 
 operators={'+':addOp,
            '-':subOp,
@@ -39,7 +42,11 @@ operators={'+':addOp,
            'group':groupOp,
            'funcall':funcOp,
            'range':rangeOp,
-           'cellref':cellOp
+           'cell':cellOp,
+           'relcol':elemOp,
+           'abscol':elemOp,
+           'relrow':elemOp,
+           'absrow':elemOp
            }
 
 def compile_token(token):
@@ -57,7 +64,6 @@ def compile_assignment(tokens):
         compiled=compile_token(tokens[1])
         return currentKey,compiled
 
-
 def traxcompile(source):
     global dependencies
     compiled={}
@@ -67,15 +73,12 @@ def traxcompile(source):
             dependencies=set()
             var,c=compile_assignment(assignment)
             compiled[var]=[c,dependencies]
-            
-    
     return compiled
 
 if __name__=="__main__":
 
         t='A1=SUM(A1:A7);'
         pprint (traxcompile(t))
-        sys.exit(1)
         print
         print
         t='A1=SUM(AVG(A1:A7))*2;'

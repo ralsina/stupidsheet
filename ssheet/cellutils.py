@@ -46,3 +46,37 @@ def cellrange(start,end):
                 res.append(lexer.Identifier(coordKey(col,row)))
 
     return res
+
+def parse_cellref(cellref):
+    '''Takes a half-cooked cellref from the parser and makes it nice'''
+    expanded=[]
+    for label in cellref[1:]:
+        if isKey(label):
+            c,r=splitcell(label)
+            expanded+=[c,r]
+        else:
+            expanded.append(label)
+
+    print 'expanded: ',expanded
+
+    processed=['cell']
+    is_abs=False
+    for label in expanded:
+        print 'label: ',type(label),label
+        if label=='ABS':
+            is_abs=True
+            continue
+        if is_abs:
+            if type(label)==str:
+                processed.append(['abscol',label])
+            else:
+                processed.append(['absrow',label])
+        else:
+            if type(label)==str:
+                processed.append(['relcol',label])
+            else:
+                processed.append(['relrow',label])
+
+    return processed
+
+

@@ -1,7 +1,7 @@
 
 from aperiot.lexer import *
 
-imports = []
+imports = ['cellutils']
 
 useindents = False
 usenewlines = False
@@ -56,10 +56,10 @@ rules = \
             ],
         CALCULATED: 
             [
-                ([absolute, label], '[\'cellref\',\'ABS\',$2.symbolic_name]'), 
-                ([label, absolute, number], '[\'cellref\',$1.symbolic_name,\'ABS\',str(int($3))]'), 
-                ([absolute, label, absolute, number], '[\'cellref\',\'ABS\',$2.symbolic_name,\'ABS\',str(int($4))]'), 
-                ([label], '[\'cellref\',$1.symbolic_name]'), 
+                ([absolute, label], 'parse_cellref([\'cellref\',\'ABS\',$2.symbolic_name])'), 
+                ([label, absolute, number], 'parse_cellref([\'cellref\',$1.symbolic_name,\'ABS\',str(int($3))])'), 
+                ([absolute, label, absolute, number], 'parse_cellref([\'cellref\',\'ABS\',$2.symbolic_name,\'ABS\',str(int($4))])'), 
+                ([label], 'parse_cellref([\'cellref\',$1.symbolic_name])'), 
                 ([label, lpar, ARGLIST, rpar], '[\'funcall\',$1,$3]'), 
             ],
         ARG: 
