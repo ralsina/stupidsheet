@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'StupidSheet/ui/windowbase.ui'
 #
-# Created: Tue May 29 16:23:46 2007
+# Created: Tue May 29 16:31:23 2007
 #      by: PyQt4 UI code generator 4.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -154,7 +154,7 @@ class Ui_WindowBase(object):
         self.helpAboutAction.setObjectName("helpAboutAction")
 
         self.actionEdit_Cell = QtGui.QAction(WindowBase)
-        self.actionEdit_Cell.setShortcutContext(QtCore.Qt.ApplicationShortcut)
+        self.actionEdit_Cell.setShortcutContext(QtCore.Qt.WindowShortcut)
         self.actionEdit_Cell.setVisible(False)
         self.actionEdit_Cell.setObjectName("actionEdit_Cell")
         self.fileMenu.addAction(self.fileNewAction)
