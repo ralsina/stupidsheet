@@ -1,7 +1,7 @@
 # This is a simple language for arithmetic expressions 
 
 import
-    ssheet.cellutils
+     cellutils
 
 numbers 
      number 
@@ -58,6 +58,7 @@ FACTOR           -> number           : "$1.val()"
                   | CALCULATED    	   : "$1"
                   
 RANGE            -> CALCULATED colon CALCULATED   : "[\'range\',$1,$3]"
+                 |  RANGE comma RANGE             : "[\'mulrange\',$1,$3]"
 
 CALCULATED       -> absolute label: "parse_cellref([\'cellref\',\'ABS\',$2.symbolic_name])"
                   | label absolute number : "parse_cellref([\'cellref\',$1.symbolic_name,\'ABS\',str(int($3))])"

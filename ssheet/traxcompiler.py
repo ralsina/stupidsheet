@@ -80,7 +80,10 @@ def traverse_tree(tokens,func,extra_args):
 
 
 if __name__=="__main__":
-
+        t='A1=SUM(A1:A7, C3:C9);'
+        pprint (traxcompile(t))
+        print
+        print
         t='A1=SUM(A1:A7);'
         pprint (traxcompile(t))
         print
