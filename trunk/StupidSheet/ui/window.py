@@ -45,6 +45,8 @@ class Window(QtGui.QMainWindow):
                                QtCore.SIGNAL('changed'),
                                self.changeCell)
 
+        self.ui.grid.setFocus()
+
     def fileSaveAs(self):
         data=pickle.dumps(self.sheet._cells)
         (status,key,fname)=opensave.saveAsFile(data)
@@ -82,7 +84,9 @@ class Window(QtGui.QMainWindow):
         h=self.ui.grid.horizontalHeader()
         label=coordKey(col,row)
         self.editing=label
-        self.ui.cellName.setText(label)
+        self.ui.namebox.clear()
+        self.ui.namebox.addItem(label)
+
         try:
             f=self.sheet.getformula(label)
         except KeyError:
@@ -96,7 +100,9 @@ class Window(QtGui.QMainWindow):
         self.sheet[self.editing]=str(self.ui.formula.text())
         self.ui.saveFormula.setEnabled(False)
         self.ui.cancelFormula.setEnabled(False)
-        self.ui.cellName.setText("")
+        self.ui.namebox.clear()
+        self.ui.formula.clear()
+        self.ui.grid.setFocus()
         self.changeCell(self.editing)
 
     def cancelFormulaSlot(self):
