@@ -1,6 +1,6 @@
 import math
 import sys
-from traxcompiler import traxcompile
+from traxcompiler import Compiler
 from PyQt4 import QtGui, QtCore
 from graph_lib import *
 import ssheet.functions as functions
@@ -10,6 +10,7 @@ class SpreadSheet(QtCore.QObject):
     _cells = {}
     tools = {}
     graph=Graph()
+    compiler=Compiler()
 
     def __init__(self,parent):
         QtCore.QObject.__init__(self,parent)
@@ -19,7 +20,7 @@ class SpreadSheet(QtCore.QObject):
 
     def __setitem__(self, key, formula):
         key=key.lower()
-        c=traxcompile('%s=%s;'%(key,formula))
+        c=self.compiler.compile('%s=%s;'%(key,formula))
         self._cells[key] = [c[key][0],False,compile(c[key][0],"Formula for %s"%key,'eval')]
 
         # Dependency graph

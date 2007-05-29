@@ -1,7 +1,7 @@
 
 from aperiot.lexer import *
 
-imports = ['cellutils']
+imports = ['ssheet.cellutils']
 
 useindents = False
 usenewlines = False

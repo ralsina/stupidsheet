@@ -1,7 +1,8 @@
 from pprint import pprint
 from aperiot.parsergen import load_parser
 import aperiot
-from cellutils import *
+from ssheet.cellutils import *
+import pickle
 import sys
 
 def addOp(self,*args):
@@ -56,7 +57,10 @@ def traverse_tree(tokens,func,extra_args):
 class Compiler:
         def __init__(self):
                 self.dependencies=set()
-                self.parser=load_parser('traxter',verbose=True)
+                file_handler = file('ssheet/traxter_cfg/traxter.pkl', 'r')
+                self.parser = pickle.load(file_handler)
+                file_handler.close()
+                #self.parser=load_parser('traxter',verbose=True)
         def compile(self,source):
             compiled={}
             assign_list=self.parser.parse(source)

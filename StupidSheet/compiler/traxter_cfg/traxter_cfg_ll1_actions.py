@@ -1,7 +1,7 @@
 
 # CFG actions
 
-from cellutils import *
+from ssheet.cellutils import *
 
 # Generated rule actions
 
