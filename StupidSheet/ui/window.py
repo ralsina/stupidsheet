@@ -103,13 +103,13 @@ class Window(QtGui.QMainWindow):
             f=self.sheet.getformula(label)
         except KeyError:
             f=''
-        self.ui.formula.setText(f)
+        self.ui.formula.setText('='.join(f.split('=')[1:])[:-1])
         self.ui.saveFormula.setEnabled(True)
         self.ui.cancelFormula.setEnabled(True)
         self.ui.formula.setFocus()
         
     def saveFormulaSlot(self):
-        self.sheet[self.editing]=str(self.ui.formula.text())
+        self.sheet[self.editing]='%s=%s;'%(self.editing,str(self.ui.formula.text()))
         self.ui.saveFormula.setEnabled(False)
         self.ui.cancelFormula.setEnabled(False)
         self.ui.namebox.clear()
