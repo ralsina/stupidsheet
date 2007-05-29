@@ -28,8 +28,6 @@ def rangeOp(*args):
         c2=compile_token(args[1])
         return ','.join([compile_token(a) for a in cellrange(c1,c2)])
 def cellOp(*args):
-        print 'cell: ',args
-        x,y=keyCoord(currentKey)
         return ''.join([compile_token(a) for a in args])
 def elemOp(*args):
         return str(args[0])
