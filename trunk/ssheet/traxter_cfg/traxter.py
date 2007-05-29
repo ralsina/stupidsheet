@@ -1,7 +1,7 @@
 
 from aperiot.lexer import *
 
-imports = ['ssheet.cellutils']
+imports = ['cellutils']
 
 useindents = False
 usenewlines = False
@@ -77,6 +77,7 @@ rules = \
         RANGE: 
             [
                 ([CALCULATED, colon, CALCULATED], '[\'range\',$1,$3]'), 
+                ([RANGE, comma, RANGE], '[\'mulrange\',$1,$3]'), 
             ],
         EXPR: 
             [
