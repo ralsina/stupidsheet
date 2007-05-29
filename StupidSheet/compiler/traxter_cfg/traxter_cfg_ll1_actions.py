@@ -1,7 +1,7 @@
 
 # CFG actions
 
-from ssheet.cellutils import *
+from StupidSheet.backend.cellutils import *
 
 # Generated rule actions
 

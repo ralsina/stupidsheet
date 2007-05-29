@@ -1,7 +1,7 @@
 from pprint import pprint
 from aperiot.parsergen import load_parser
 import aperiot
-from ssheet.cellutils import *
+from StupidSheet.backend.cellutils import *
 import pickle
 import sys
 
@@ -57,10 +57,7 @@ def traverse_tree(tokens,func,extra_args):
 class Compiler:
         def __init__(self):
                 self.dependencies=set()
-                file_handler = file('ssheet/traxter_cfg/traxter.pkl', 'r')
-                self.parser = pickle.load(file_handler)
-                file_handler.close()
-                #self.parser=load_parser('traxter',verbose=True)
+                self.parser=load_parser('traxter',verbose=True)
         def compile(self,source):
             compiled={}
             assign_list=self.parser.parse(source)
