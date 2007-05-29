@@ -4,6 +4,7 @@ from traxcompiler import traxcompile
 from PyQt4 import QtGui, QtCore
 from graph_lib import *
 import ssheet.functions as functions
+from ssheet.cellutils import *
 
 class SpreadSheet(QtCore.QObject):
     _cells = {}
@@ -49,13 +50,14 @@ class SpreadSheet(QtCore.QObject):
         key=key.lower()
         return self._cells[key][0]
     def __getitem__(self, key ):
-        if not self._cells.has_key(key):
+        if not self._cells.has_key(key) and isKey(key):
+            print 'unknown cell: ', key
             return 0
         if self._cells[key][1]:
             return "ERROR: cyclic dependency"
         else:
             print 'evaluating [%s]: '%key,type(self._cells[key][0]),self._cells[key][0]
-            print self._cells[key][0], self
+            print self._cells[key][0]
             r=eval(self._cells[key][0], self.tools, self)
             print r
             return r
