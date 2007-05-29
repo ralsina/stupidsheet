@@ -15,7 +15,7 @@
   <widget class="QWidget" name="widget" >
    <layout class="QVBoxLayout" >
     <property name="margin" >
-     <number>11</number>
+     <number>9</number>
     </property>
     <property name="spacing" >
      <number>6</number>
@@ -29,15 +29,19 @@
        <number>6</number>
       </property>
       <item>
-       <widget class="QToolButton" name="saveFormula" >
-        <property name="enabled" >
-         <bool>false</bool>
+       <widget class="QComboBox" name="namebox" >
+        <property name="editable" >
+         <bool>true</bool>
         </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QToolButton" name="functions" >
         <property name="text" >
-         <string/>
+         <string>...</string>
         </property>
         <property name="icon" >
-         <iconset resource="icons.qrc" >:/icons/endturn.svg</iconset>
+         <iconset resource="icons.qrc" >:/icons/funct.svg</iconset>
         </property>
        </widget>
       </item>
@@ -55,21 +59,15 @@
        </widget>
       </item>
       <item>
-       <widget class="QLabel" name="cellName" >
-        <property name="minimumSize" >
-         <size>
-          <width>64</width>
-          <height>0</height>
-         </size>
+       <widget class="QToolButton" name="saveFormula" >
+        <property name="enabled" >
+         <bool>false</bool>
         </property>
         <property name="text" >
          <string/>
         </property>
-        <property name="alignment" >
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-        </property>
-        <property name="wordWrap" >
-         <bool>false</bool>
+        <property name="icon" >
+         <iconset resource="icons.qrc" >:/icons/endturn.svg</iconset>
         </property>
        </widget>
       </item>

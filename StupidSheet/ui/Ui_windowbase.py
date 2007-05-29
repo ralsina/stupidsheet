@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'StupidSheet/ui/windowbase.ui'
 #
-# Created: Tue May 29 13:03:43 2007
+# Created: Tue May 29 13:15:59 2007
 #      by: PyQt4 UI code generator 4.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -18,7 +18,7 @@ class Ui_WindowBase(object):
         self.widget.setObjectName("widget")
 
         self.vboxlayout = QtGui.QVBoxLayout(self.widget)
-        self.vboxlayout.setMargin(11)
+        self.vboxlayout.setMargin(9)
         self.vboxlayout.setSpacing(6)
         self.vboxlayout.setObjectName("vboxlayout")
 
@@ -27,11 +27,15 @@ class Ui_WindowBase(object):
         self.hboxlayout.setSpacing(6)
         self.hboxlayout.setObjectName("hboxlayout")
 
-        self.saveFormula = QtGui.QToolButton(self.widget)
-        self.saveFormula.setEnabled(False)
-        self.saveFormula.setIcon(QtGui.QIcon(":/icons/endturn.svg"))
-        self.saveFormula.setObjectName("saveFormula")
-        self.hboxlayout.addWidget(self.saveFormula)
+        self.namebox = QtGui.QComboBox(self.widget)
+        self.namebox.setEditable(True)
+        self.namebox.setObjectName("namebox")
+        self.hboxlayout.addWidget(self.namebox)
+
+        self.functions = QtGui.QToolButton(self.widget)
+        self.functions.setIcon(QtGui.QIcon(":/icons/funct.svg"))
+        self.functions.setObjectName("functions")
+        self.hboxlayout.addWidget(self.functions)
 
         self.cancelFormula = QtGui.QToolButton(self.widget)
         self.cancelFormula.setEnabled(False)
@@ -39,12 +43,11 @@ class Ui_WindowBase(object):
         self.cancelFormula.setObjectName("cancelFormula")
         self.hboxlayout.addWidget(self.cancelFormula)
 
-        self.cellName = QtGui.QLabel(self.widget)
-        self.cellName.setMinimumSize(QtCore.QSize(64,0))
-        self.cellName.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
-        self.cellName.setWordWrap(False)
-        self.cellName.setObjectName("cellName")
-        self.hboxlayout.addWidget(self.cellName)
+        self.saveFormula = QtGui.QToolButton(self.widget)
+        self.saveFormula.setEnabled(False)
+        self.saveFormula.setIcon(QtGui.QIcon(":/icons/endturn.svg"))
+        self.saveFormula.setObjectName("saveFormula")
+        self.hboxlayout.addWidget(self.saveFormula)
 
         self.formula = QtGui.QLineEdit(self.widget)
         self.formula.setObjectName("formula")
@@ -189,6 +192,7 @@ class Ui_WindowBase(object):
 
     def retranslateUi(self, WindowBase):
         WindowBase.setWindowTitle(QtGui.QApplication.translate("WindowBase", "Form1", None, QtGui.QApplication.UnicodeUTF8))
+        self.functions.setText(QtGui.QApplication.translate("WindowBase", "...", None, QtGui.QApplication.UnicodeUTF8))
         self.grid.clear()
         self.grid.setColumnCount(0)
         self.grid.setRowCount(0)
