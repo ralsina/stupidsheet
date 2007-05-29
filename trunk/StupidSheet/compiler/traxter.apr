@@ -1,7 +1,7 @@
 # This is a simple language for arithmetic expressions 
 
 import
-     cellutils
+     ssheet.cellutils
 
 numbers 
      number 
