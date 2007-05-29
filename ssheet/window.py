@@ -33,7 +33,7 @@ class Window(QtGui.QMainWindow):
         self.fname=None
 
         QtCore.QObject.connect(self.ui.grid,
-                               QtCore.SIGNAL('cellDoubleClicked(int,int)'),
+                               QtCore.SIGNAL('cellClicked(int,int)'),
                                self.clickedGrid)
         QtCore.QObject.connect(self.ui.cancelFormula,
                                QtCore.SIGNAL('clicked()'),
