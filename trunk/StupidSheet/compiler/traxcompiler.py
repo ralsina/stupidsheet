@@ -3,7 +3,7 @@ from aperiot.parsergen import load_parser
 import aperiot
 from StupidSheet.backend.cellutils import *
 import pickle
-import sys
+import sys,os
 
 def addOp(self,*args):
         return '+'.join([self.compile_token(a) for a in args])
@@ -57,7 +57,21 @@ def traverse_tree(tokens,func,extra_args):
 class Compiler:
         def __init__(self):
                 self.dependencies=set()
-                self.parser=load_parser('traxter',verbose=True)
+
+                # Basically, I am remplementing aperiot's load_parser
+                # because it's broken when your project is in
+                # more than one folder
+
+                root,ext=os.path.splitext('StupidSheet.compiler.traxter.traxter')
+                package_name = root + '_cfg'
+                temp_table = {}
+                exec "import " + package_name in temp_table
+                package_path = eval(package_name, temp_table).__path__[0]
+                filename = os.path.join(package_path, 'traxter.pkl')
+                file_handler = file(filename, 'r')
+                self.parser = pickle.load(file_handler)
+                file_handler.close()
+
         def compile(self,source):
             compiled={}
             assign_list=self.parser.parse(source)

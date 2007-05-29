@@ -7,7 +7,7 @@ import pickle
 import pprint
 import tokenize
 import StringIO
-from ssheet.cellutils import *
+from StupidSheet.backend.cellutils import *
 import time
 
 class Window(QtGui.QMainWindow):

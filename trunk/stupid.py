@@ -3,11 +3,11 @@
 import sys
 from PyQt4 import QtCore, QtGui
 
-import StupidSheet.ui.window as window
+from StupidSheet.ui.window import Window
 
 def main(args):
     app=QtGui.QApplication(sys.argv)
-    window=window.Window()
+    window=Window()
     window.show()
     sys.exit(app.exec_())
 
