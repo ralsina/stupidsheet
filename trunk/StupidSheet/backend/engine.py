@@ -1,6 +1,7 @@
 import math
 import sys
 from StupidSheet.compiler.traxcompiler import Compiler
+from StupidSheet.compiler.traxdecompiler import displace_formula
 from PyQt4 import QtGui, QtCore
 from graph_lib import *
 import StupidSheet.backend.functions as functions
@@ -20,8 +21,7 @@ class SpreadSheet(QtCore.QObject):
 
     def __setitem__(self, key, formula):
         key=key.lower()
-        print 'Formula for %s is now %s'%(key,formula)
-        c=self.compiler.compile('%s=%s;'%(key,formula))
+        c=self.compiler.compile(formula)
         self._cells[key] = [c[key][0],
                             False,
                             compile(c[key][0],"Formula for %s"%key,'eval'),
@@ -74,9 +74,14 @@ class SpreadSheet(QtCore.QObject):
         f1=self.getformula(keyFrom)
         if not f1:
             return f1
-        print 'parsing: ','%s=%s'%(keyFrom,f1)
-        tree=self.compiler.parser.parse(f1)
-        print tree
+        print 'Displacing: ',f1
+        displaced=displace_formula(f1,keyFrom,keyTo)
+        print 'Displaced: ',displaced
+        return displaced
+
+
+
+
 
 
         

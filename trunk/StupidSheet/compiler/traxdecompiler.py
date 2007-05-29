@@ -1,5 +1,5 @@
 from pprint import pprint
-import sys
+import sys,os,pickle
 import aperiot
 from traxcompiler import traverse_tree
 from StupidSheet.backend.cellutils import *
@@ -81,14 +81,29 @@ def displace_cell(token,dx,dy):
                 c,r=splitcell(k)
                 token[2][1]=r
 
-def displace_formula(tree,key_from,key_to):
+# FIXME make it less incredibly awful
+def displace_formula(formula,key_from,key_to):
+        # Basically, I am remplementing aperiot's load_parser
+        # because it's broken when your project is in
+        # more than one folder
+
+        root,ext=os.path.splitext('StupidSheet.compiler.traxter.traxter')
+        package_name = root + '_cfg'
+        temp_table = {}
+        exec "import " + package_name in temp_table
+        package_path = eval(package_name, temp_table).__path__[0]
+        filename = os.path.join(package_path, 'traxter.pkl')
+        file_handler = file(filename, 'r')
+        traxparser = pickle.load(file_handler)
+        file_handler.close()
         x1,y1=keyCoord(key_from)
         x2,y2=keyCoord(key_to)
         dx=x2-x1
         dy=y2-y1
         # Traverse formula applying displace_cell
+        tree=traxparser.parse(formula)
         traverse_tree(tree,displace_cell,[dx,dy])
-        return tree
+        return regurgitate(tree)
 
 if __name__=="__main__":
         from aperiot.parsergen import build_parser
