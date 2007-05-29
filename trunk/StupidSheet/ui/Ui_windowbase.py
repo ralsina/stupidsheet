@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'StupidSheet/ui/windowbase.ui'
 #
-# Created: Tue May 29 18:23:00 2007
+# Created: Tue May 29 18:27:26 2007
 #      by: PyQt4 UI code generator 4.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -66,7 +66,7 @@ class Ui_WindowBase(object):
         self.vboxlayout1.setObjectName("vboxlayout1")
 
         self.grid = QtGui.QTableWidget(self.tab)
-        self.grid.setEditTriggers(QtGui.QAbstractItemView.AnyKeyPressed|QtGui.QAbstractItemView.DoubleClicked|QtGui.QAbstractItemView.NoEditTriggers)
+        self.grid.setEditTriggers(QtGui.QAbstractItemView.NoEditTriggers)
         self.grid.setDragDropOverwriteMode(False)
         self.grid.setAlternatingRowColors(True)
         self.grid.setObjectName("grid")
