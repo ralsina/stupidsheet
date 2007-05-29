@@ -53,7 +53,7 @@ rules = \
             ],
         ASSIGNMENT: 
             [
-                ([label, equal, EXPR], '($1,$3)'), 
+                ([label, equal, EXPR], '[$1,$3]'), 
             ],
         CALCULATED: 
             [

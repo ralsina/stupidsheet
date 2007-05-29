@@ -2,7 +2,7 @@ from pprint import pprint
 import sys
 import aperiot
 from traxcompiler import traverse_tree
-from cellutils import *
+from StupidSheet.backend.cellutils import *
 
 def addOp(*args):
         return '+'.join([decompile_token(a) for a in args])
@@ -93,7 +93,7 @@ def displace_formula(tree,key_from,key_to):
 if __name__=="__main__":
         from aperiot.parsergen import build_parser
         traxparser = build_parser('traxter')
-        t='A1=SUM(A1:A7);A1=SUM(AVG(A1:A7))*2;A1=$A1+A$1+$A$1+A1;'
-        pprint (regurgitate(traxparser.parse(t)))
-        t='A1=$A1+A$1+$A$1+A1;'
-        pprint (displace_formula(traxparser.parse(t)[0][1],'A1','B2'))
+        #t='A1=SUM(A1:A7);A1=SUM(AVG(A1:A7))*2;A1=$A1+A$1+$A$1+A1;'
+        #pprint (regurgitate(traxparser.parse(t)))
+        t='A1=A1;'
+        pprint (regurgitate(displace_formula(traxparser.parse(t),'A1','B2')))

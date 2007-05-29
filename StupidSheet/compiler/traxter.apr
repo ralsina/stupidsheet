@@ -34,7 +34,7 @@ LIST             -> ASSIGNMENT                : "[$1]"
                   | ASSIGNMENT semicolon LIST : "[$1]+$3"
                   | ASSIGNMENT semicolon : "[$1]"
 
-ASSIGNMENT       -> label equal EXPR : "($1,$3)"
+ASSIGNMENT       -> label equal EXPR : "[$1,$3]"
 
 ARGLIST          -> ARG comma ARGLIST : "[$1]+$3"
                   | ARG          : "[$1]"

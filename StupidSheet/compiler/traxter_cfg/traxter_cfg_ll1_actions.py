@@ -18,7 +18,7 @@ def calculated_5_1():
   return lambda _yyy: (lambda x0: parse_cellref(['cellref',x0.symbolic_name]))(_yyy)
 
 def expansion_13(x0):
-  return lambda z14: lambda z13: lambda z12: lambda z3: (lambda x0, x1, x2: [x0]+x2)((lambda x0, x1, x2: (x0,x2))(z3, z12, z13), z14, x0)
+  return lambda z14: lambda z13: lambda z12: lambda z3: (lambda x0, x1, x2: [x0]+x2)((lambda x0, x1, x2: [x0,x2])(z3, z12, z13), z14, x0)
 
 def expansion_26(x0, x1, x2, x3):
   return lambda z10: (lambda x0, x1, x2: ['+',x0,x2])(z10, x0, x3(x2(x1)))
@@ -72,10 +72,10 @@ def expr_3():
   return lambda _yyy: (lambda x0: x0)(_yyy)
 
 def list_10_12_25():
-  return lambda _yyy: lambda z39: lambda z8: (lambda x0: [x0])((lambda x0, x1, x2: (x0,x2))(z8, z39, _yyy))
+  return lambda _yyy: lambda z39: lambda z8: (lambda x0: [x0])((lambda x0, x1, x2: [x0,x2])(z8, z39, _yyy))
 
 def list_10_12_25_37_1():
-  return lambda _yyy: lambda z29: lambda z22: lambda z2: (lambda x0, x1: [x0])((lambda x0, x1, x2: (x0,x2))(z2, z22, z29), _yyy)
+  return lambda _yyy: lambda z29: lambda z22: lambda z2: (lambda x0, x1: [x0])((lambda x0, x1, x2: [x0,x2])(z2, z22, z29), _yyy)
 
 def new_calculated_action_2(first, continuation):
   return continuation(first)
