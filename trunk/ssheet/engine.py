@@ -3,8 +3,7 @@ import sys
 from traxcompiler import traxcompile
 from PyQt4 import QtGui, QtCore
 from graph_lib import *
-
-import functions
+import ssheet.functions as functions
 
 class SpreadSheet(QtCore.QObject):
     _cells = {}
@@ -44,7 +43,7 @@ class SpreadSheet(QtCore.QObject):
                 # And remove all incoming edges to go back to
                 # status quo
                 for edge in self.graph.in_arcs(key):
-                        self.graph.delete_edge(edge)
+                    self.graph.delete_edge(edge)
 
     def getformula(self, key):
         key=key.lower()
@@ -56,7 +55,10 @@ class SpreadSheet(QtCore.QObject):
             return "ERROR: cyclic dependency"
         else:
             print 'evaluating [%s]: '%key,type(self._cells[key][0]),self._cells[key][0]
-            return eval(self._cells[key][0], self.tools, self)
+            print self._cells[key][0], self
+            r=eval(self._cells[key][0], self.tools, self)
+            print r
+            return r
 
 
         
