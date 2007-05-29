@@ -15,10 +15,8 @@ def subOp(*args):
         return '-'.join([compile_token(a) for a in args])
 def divOp(*args):
         return '/'.join([compile_token(a) for a in args])
-
 def groupOp(*args):
         return '(%s)'%compile_token(args[0])
-
 def funcOp(*args):
         return '%s(%s)'%(args[0],
                          ','.join([compile_token(a) for a in args[1]]))
@@ -28,7 +26,9 @@ def rangeOp(*args):
         c2=compile_token(args[1])
         return ','.join([compile_token(a) for a in cellrange(c1,c2)])
 def cellOp(*args):
-        return ''.join([compile_token(a) for a in args])
+        cell=''.join([compile_token(a) for a in args])
+        dependencies.add(cell)
+        return cell
 def elemOp(*args):
         return str(args[0])
 
@@ -49,9 +49,7 @@ operators={'+':addOp,
 
 def compile_token(token):
         if isinstance (token,aperiot.lexer.Identifier):
-                v=token.symbolic_name.lower()
-                dependencies.add(v)
-                return v
+                return token.symbolic_name.lower()
         if isinstance(token,list):
             return apply(operators[token[0]],token[1:])
         return str(token)

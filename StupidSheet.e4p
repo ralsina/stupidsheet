@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE Project SYSTEM "Project-4.0.dtd">
 <!-- eric4 project file for project StupidSheet -->
-<!-- Saved: 2007-05-23, 20:29:17 -->
+<!-- Saved: 2007-05-29, 09:59:16 -->
 <!-- Copyright (C) 2007 Roberto Alsina, ralsina@kde.org -->
 <Project version="4.0">
   <ProgLanguage mixed="0">Python</ProgLanguage>
@@ -36,6 +36,26 @@
     <Source>
       <Dir>ssheet</Dir>
       <Name>Ui_windowbase.py</Name>
+    </Source>
+    <Source>
+      <Dir>ssheet</Dir>
+      <Name>cellutils.py</Name>
+    </Source>
+    <Source>
+      <Dir>ssheet</Dir>
+      <Name>traxcompiler.py</Name>
+    </Source>
+    <Source>
+      <Dir>ssheet</Dir>
+      <Name>graph_lib.py</Name>
+    </Source>
+    <Source>
+      <Dir>ssheet</Dir>
+      <Name>functions.py</Name>
+    </Source>
+    <Source>
+      <Dir>ssheet</Dir>
+      <Name>traxdecompiler.py</Name>
     </Source>
   </Sources>
   <Forms>

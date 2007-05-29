@@ -7,7 +7,7 @@ import pickle
 import pprint
 import tokenize
 import StringIO
-from engine import isKey,keyCoord,coordKey
+from ssheet.cellutils import *
 import time
 
 class Window(QtGui.QMainWindow):
