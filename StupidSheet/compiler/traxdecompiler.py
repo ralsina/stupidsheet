@@ -90,7 +90,6 @@ def displace_formula(tree,key_from,key_to):
         traverse_tree(tree,displace_cell,[dx,dy])
         return tree
 
-
 if __name__=="__main__":
         from aperiot.parsergen import build_parser
         traxparser = build_parser('traxter')
