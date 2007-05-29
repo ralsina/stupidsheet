@@ -74,6 +74,14 @@ def traxcompile(source):
             compiled[var]=[c,dependencies]
     return compiled
 
+def traverse_tree(tokens,func,extra_args):
+        '''applies func to all tokens in a tree'''
+        for token in tokens:
+                apply(func,[token]+list(extra_args))
+                if type(token)==list:
+                        traverse_tree(token,func,extra_args)
+
+
 if __name__=="__main__":
 
         t='A1=SUM(A1:A7);'

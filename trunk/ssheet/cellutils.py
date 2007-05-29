@@ -16,7 +16,6 @@ def coordKey(x,y):
     
     
 def keyCoord(key):
-    print "keyCoord: ",key
     if key[1].isalpha():
         x=(ord(key[0])-97)*26+ord(key[1])-97
         y=int(key[2:])-1
