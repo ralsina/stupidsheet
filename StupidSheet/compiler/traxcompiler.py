@@ -24,7 +24,7 @@ def rangeOp(self,*args):
         c2=self.compile_token(args[1])
         return ','.join([self.compile_token(a) for a in cellrange(c1,c2)])
 def cellOp(self,*args):
-        name=''.join([self.compile_token(a) for a in args])
+        name=''.join([self.compile_token(a) for a in args]).lower()
         self.dependencies.add(name)
         return name
 def elemOp(self,*args):
