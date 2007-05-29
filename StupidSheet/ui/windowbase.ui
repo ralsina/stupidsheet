@@ -92,7 +92,7 @@
         <item>
          <widget class="QTableWidget" name="grid" >
           <property name="editTriggers" >
-           <set>QAbstractItemView::AnyKeyPressed|QAbstractItemView::DoubleClicked|QAbstractItemView::NoEditTriggers</set>
+           <set>QAbstractItemView::NoEditTriggers</set>
           </property>
           <property name="dragDropOverwriteMode" >
            <bool>false</bool>
