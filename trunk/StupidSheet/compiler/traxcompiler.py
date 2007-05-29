@@ -24,7 +24,9 @@ def rangeOp(self,*args):
         c2=self.compile_token(args[1])
         return ','.join([self.compile_token(a) for a in cellrange(c1,c2)])
 def cellOp(self,*args):
-        return ''.join([self.compile_token(a) for a in args])
+        name=''.join([self.compile_token(a) for a in args])
+        self.dependencies.add(name)
+        return name
 def elemOp(self,*args):
         return str(args[0])
 
@@ -43,9 +45,6 @@ operators={'+':addOp,
            'absrow':elemOp
            }
 
-
-def traxcompile(source):
-    global dependencies
 
 def traverse_tree(tokens,func,extra_args):
         '''applies func to all tokens in a tree'''
@@ -110,6 +109,10 @@ if __name__=="__main__":
         print
         print
         t='A1=$A1+A$1+$A$1+A1;'
+        pprint (c.compile(t))
+        print
+        print
+        t='A1=1;A2=A1+1;'
         pprint (c.compile(t))
 
 
