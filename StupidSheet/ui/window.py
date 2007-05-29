@@ -32,9 +32,12 @@ class Window(QtGui.QMainWindow):
         self.editing=None
         self.fname=None
 
+        QtCore.QObject.connect(self.ui.actionEdit_Cell,
+                               QtCore.SIGNAL('activated()'),
+                               self.editCell)
         QtCore.QObject.connect(self.ui.grid,
                                QtCore.SIGNAL('cellClicked(int,int)'),
-                               self.clickedGrid)
+                               self.editCell)
         QtCore.QObject.connect(self.ui.cancelFormula,
                                QtCore.SIGNAL('clicked()'),
                                self.cancelFormulaSlot)
@@ -44,17 +47,17 @@ class Window(QtGui.QMainWindow):
         QtCore.QObject.connect(self.sheet,
                                QtCore.SIGNAL('changed'),
                                self.changeCell)
-        QtCore.QObject.connect(self.ui.grid,
-                               QtCore.SIGNAL('itemChanged(QTableWidgetItem *)'),
-                               self.updateEditor)
+        QtCore.QObject.connect(self.ui.editCopyAction,
+                               QtCore.SIGNAL('activated()'),
+                               self.editCopy)
+        QtCore.QObject.connect(self.ui.editPasteAction,
+                               QtCore.SIGNAL('activated()'),
+                               self.editPaste)
+        QtCore.QObject.connect(self.ui.editCutAction,
+                               QtCore.SIGNAL('activated()'),
+                               self.editCut)
 
         self.ui.grid.setFocus()
-
-    def updateEditor(self,item):
-        self.editing=coordKey(item.column(),item.row())
-        print "key to update: ",self.editing,unicode(item.text())
-        self.ui.formula.setText(item.text())
-        self.saveFormulaSlot()
 
     def fileSaveAs(self):
         data=pickle.dumps(self.sheet._cells)
@@ -88,8 +91,8 @@ class Window(QtGui.QMainWindow):
             self.ui.grid.setItem(y,x,item)
         item.setText(str(self.sheet[key]))
         
-    def clickedGrid(self,row, col):
-        print "ClickedGrid"
+    def editCell(self):
+        row,col=self.ui.grid.currentRow(),self.ui.grid.currentColumn()
         h=self.ui.grid.horizontalHeader()
         label=coordKey(col,row)
         self.editing=label
@@ -120,144 +123,107 @@ class Window(QtGui.QMainWindow):
     def fileExit(self):
         self.close()
         self.deleteLater()
+
+    def editCut(self):
+        pass
         
     def editCopy(self):
-        sel=self.ui.grid.selection(0)
-        self.clipboard=[]
-        for col in range(sel.leftCol(),sel.rightCol()+1):
-            r=[]
-            for row in range(sel.topRow(),sel.bottomRow()+1):
-                key=coordKey(col,row)
-##              print "key=",key
-                r.append(self.sheet.getformula(key))
-            self.clipboard.append(r)
-##      pprint.pprint(self.clipboard)
-        self.clipPos=(sel.leftCol(),sel.topRow())
-        
-    def editPaste(self):
-        print "paste start:",time.time()
-        sel=self.ui.grid.selection(0)
-        #Height and width of clipboard
-        w=len(self.clipboard)
-        h=len(self.clipboard[0])
-##      print "h,w=",h,w
+        # Let's do copy of multiple selections (which oocalc doesn't!)
+        ranges=set(self.ui.grid.selectedRanges())
 
-        #Offsets of cell displacement
-        dx=sel.leftCol()-self.clipPos[0]
-        dy=sel.topRow()-self.clipPos[1]
-        
-        #If selection is smaller than clipboard, just paste it *starting* at selection
-        if h > (sel.bottomRow()-sel.topRow()+1) or w > (sel.rightCol()-sel.leftCol()+1):
-##          print "non-tiling paste"
-            for x in range (0,w):
-                for y in range (0,h):
-                    key=coordKey(sel.leftCol()+x,sel.topRow()+y)
-                    #Displace the formula for the cell as much as needed
-##                  print "x,y=",x,y
-                    form=self.displaceFormula(self.clipboard[x][y],dx,dy)
-                    self.sheet[key]=form
-                    self.changeCell(key,self.sheet[key])
-        else: #Selection is larger than clipboard       
-            #Implement tiling paste, which seems to be the usual way.
-            for y in range(sel.topRow(),sel.bottomRow()+1):
-                for x in range(sel.leftCol(),sel.rightCol()+1):
+        minx=min([ r.leftColumn() for r in ranges ])
+        maxx=max([ r.rightColumn() for r in ranges ])
+        miny=min([ r.topRow() for r in ranges ])
+        maxy=max([ r.bottomRow() for r in ranges ])
+
+        self.clipboard_width=maxx-minx+1
+        self.clipboard_height=maxy-miny+1
+
+        self.clipPos=(minx,miny)
+
+        self.clipboard={}
+
+        for r in ranges:
+            for x in range(r.leftColumn(),r.rightColumn()+1):
+                for y in range(r.topRow(),r.bottomRow()+1):
+                    i=self.ui.grid.item(x,y)
+                    if i==0:
+                        continue
                     key=coordKey(x,y)
-                    mx=(x-sel.leftCol())%w
-                    my=(y-sel.topRow())%h
-                    mdx=(x-mx)-self.clipPos[0]
-                    mdy=(y-my)-self.clipPos[1]
-                    form=self.displaceFormula(self.clipboard[mx][my],mdx,mdy)
-                    self.sheet[key]=form
-                    self.changeCell(key,self.sheet[key])
+                    f=self.sheet.getformula(key)
+                    if f:
+                        self.clipboard[key]=self.sheet.getformula(key)
+
+        print self.clipboard,self.clipboard_width,self.clipboard_height,self.clipPos
+
+    def editPaste(self):
+        selRanges=self.ui.grid.selectedRanges()
+        # OOcalc doesn't support it. KSpread does, but it does
+        # weird things. Let's go safe ;-)
+        if len(selRanges)>1:
+                QtGui.QMessageBox.information(self,'SSheet','Insert into multiple selection is not possible')
+                return
+
+        selw=selRanges[0].columnCount()
+        selh=selRanges[0].rowCount()
+
+        print selw,selh ,'||' ,self.clipboard_width ,self.clipboard_height
+        # If the selection is not one cell, but is smaller than
+        # the clipboard, warn that we will paste outside of the
+        # selection
+        if (selw <>1 or selh <>1 ) and (selw < self.clipboard_width or selh < self.clipboard_height):
+            r=QtGui.QMessageBox.question(self,'SSheet',
+                   'The content of the clipboard is bigger than the range selected.<br>Do you want to insert it anyway?',
+                   QtGui.QMessageBox.Yes|QtGui.QMessageBox.No)
+            if r==QtGui.QMessageBox.No: return
+
+        # Adjust the selection to match clipboard size
+        if selw < self.clipboard_width:
+             selRanges[0]=QtGui.QTableWidgetSelectionRange(selRanges[0].topRow(),
+                                                           selRanges[0].leftColumn(),
+                                                           selRanges[0].bottomRow(),
+                                                           selRanges[0].leftColumn()+self.clipboard_width-1
+                                                           )
+        if selh < self.clipboard_height:
+             selRanges[0]=QtGui.QTableWidgetSelectionRange(selRanges[0].topRow(),
+                                                           selRanges[0].leftColumn(),
+                                                           selRanges[0].topRow()+self.clipboard_height-1,
+                                                           selRanges[0].rightColumn())
+        self.ui.grid.setRangeSelected(selRanges[0],True)
+
+
+
+        print "paste start:",time.time()
+        # We traverse the target selection
+        for x in range(selRanges[0].leftColumn(),selRanges[0].rightColumn()+1):
+            for y in range(selRanges[0].topRow(),selRanges[0].bottomRow()+1):
+                targetKey=coordKey(x,y)
+
+                # How many cells to the right and down of the origin of the
+                # source cells is the cell we should copy
+
+                dx1=(x-selRanges[0].leftColumn())%self.clipboard_width
+                dy1=(y-selRanges[0].topRow())%self.clipboard_height
+
+                # How many cells to the right and down should the formula
+                # of that cell be displaced
+
+                dx2=x-self.clipPos[0]-dx1
+                dy2=y-self.clipPos[1]-dy1
+
+                # Key of the source cell to be copied
+                sourceKey=coordKey(self.clipPos[0]+dx1,
+                                   self.clipPos[1]+dy1)
+
+                print targetKey,sourceKey,dx1,dy1,dx2,dy2
+                self.sheet.getDisplacedFormula(sourceKey,targetKey)
+
+
+        # Find the matching origin cell considering tiling
+
+        # And paste
+
         print "paste end:",time.time()
-        print "deps after paste"
-        print self.sheet._deps
-        #Recalculate all the pasted area
-        for y in range(sel.topRow(),sel.bottomRow()+1):
-            for x in range(sel.leftCol(),sel.rightCol()+1):
-                self.sheet.reCalculate(coordKey(x,y))
+
+                
     
-    def displaceFormula(self,formula,_dx,_dy):
-        global toks,dx,dy,program
-        toks=[]
-        dx=_dx
-        dy=_dy
-        program=[]
-        lastrow, lastcol = 1, 0
-        lastline = ''
-        
-        f=StringIO.StringIO(formula)
-        tokenize.tokenize(f.readline,tokeneater)
-##      print toks
-##      pprint.pprint(toks)
-        for token in toks:
-            apply(rebuild,token)
-##      print "program: ",program
-        if program[0]=='':
-            program=program[1:]
-        return ''.join(program)
-
-        
-#Shamelessly stolen from Ka-Ping Yee's regurgitate
-def rebuild(type, token, (startrow, startcol), (endrow, endcol), line):
-    global lastrow, lastcol, lastline, program
-
-    # Deal with the bits between tokens.
-    if lastrow == startrow == endrow:            # ordinary token
-        program.append(line[lastcol:startcol])
-    elif lastrow != startrow:                    # backslash continuation
-        program.append(lastline[lastcol:] + line[:startcol])
-    elif startrow != endrow:                     # multi-line string
-        program.append(lastline[lastcol:startcol])
-
-    # Append the token itself.
-    program.append(token)
-
-    # Save some information for the next time around.
-    if token and token[-1] == '\n':
-        lastrow, lastcol = endrow+1, 0           # start on next line
-    else:
-        lastrow, lastcol = endrow, endcol        # remember last position
-
-    lastline = line                              # remember last line
-
-
-
-def tokeneater(type,key,start,end,line):
-    global toks,dx,dy
-##  print "tokeneater:",tokenize.tok_name[type],key
-    if tokenize.tok_name[type]=='NAME':
-        if isKey(key):
-            (x,y)=keyCoord(key)
-            x=x+dx
-            y=y+dy
-##          print "displacing %s to %s"%(key,coordKey(x,y))
-            key=coordKey(x,y)
-    toks.append((type,key,start,end,line))
-                    
-
-#####################################################################
-#Psyco cheating
-#####################################################################
-try:
-    import psyco
-    psyco.bind(tokeneater)
-    psyco.bind(rebuild)
-    psyco.bind(Window.displaceFormula)
-except:
-    pass
-
-    
-    
-######################################################################
-#Don't look below... global variables Yeech!
-######################################################################
-
-
-
-toks=[]
-dx=0
-dy=0
-program = []
-lastrow, lastcol = 1, 0
-lastline = ''

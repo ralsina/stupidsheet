@@ -20,14 +20,18 @@ class SpreadSheet(QtCore.QObject):
 
     def __setitem__(self, key, formula):
         key=key.lower()
+        print 'Formula for %s is now %s'%(key,formula)
         c=self.compiler.compile('%s=%s;'%(key,formula))
-        self._cells[key] = [c[key][0],False,compile(c[key][0],"Formula for %s"%key,'eval')]
-
+        self._cells[key] = [c[key][0],
+                            False,
+                            compile(c[key][0],"Formula for %s"%key,'eval'),
+                            formula]
         # Dependency graph
         if not self.graph.has_node(key):
             self.graph.add_node(key)
         for edge in self.graph.in_arcs(key):
             self.graph.delete_edge(edge)
+        print 'deps: ',c[key][1]
         for cell in c[key][1]:
             if not self.graph.has_node(cell):
                 self.graph.add_node(cell)
@@ -49,7 +53,10 @@ class SpreadSheet(QtCore.QObject):
 
     def getformula(self, key):
         key=key.lower()
-        return self._cells[key][0]
+        if key in self._cells:
+                return self._cells[key][-1]
+        else:
+                return ''
     def __getitem__(self, key ):
         if not self._cells.has_key(key) and isKey(key):
             print 'unknown cell: ', key
@@ -62,6 +69,14 @@ class SpreadSheet(QtCore.QObject):
             r=eval(self._cells[key][0], self.tools, self)
             print r
             return r
+
+    def getDisplacedFormula(self,keyFrom,keyTo):
+        f1=self.getformula(keyFrom)
+        if not f1:
+            return f1
+        print 'parsing: ','%s=%s'%(keyFrom,f1)
+        tree=self.compiler.parser.parse(f1)
+        print tree
 
 
         
