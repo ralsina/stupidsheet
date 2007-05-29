@@ -20,13 +20,13 @@ class Window(QtGui.QMainWindow):
         self.ui.setupUi(self)
         
         self.ui.grid.setRowCount(10000)
-        self.ui.grid.setColumnCount(26*26)
+        self.ui.grid.setColumnCount(26*27)
         labels=[]
         for i in range (0,26):
-            labels.append(chr(97+i))
+            labels.append(chr(97+i).upper())
         for i in range (0,26):
             for j in range (0,26):
-                labels.append(chr(97+i)+chr(97+j))
+                labels.append((chr(97+i)+chr(97+j)).upper())
         self.ui.grid.setHorizontalHeaderLabels (labels)
         self.sheet=engine.SpreadSheet(self)
         self.editing=None
