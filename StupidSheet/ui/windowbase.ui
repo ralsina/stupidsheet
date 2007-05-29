@@ -92,7 +92,7 @@
         <item>
          <widget class="QTableWidget" name="grid" >
           <property name="editTriggers" >
-           <set>QAbstractItemView::NoEditTriggers</set>
+           <set>QAbstractItemView::AnyKeyPressed|QAbstractItemView::DoubleClicked|QAbstractItemView::NoEditTriggers</set>
           </property>
           <property name="dragDropOverwriteMode" >
            <bool>false</bool>
@@ -100,6 +100,52 @@
           <property name="alternatingRowColors" >
            <bool>true</bool>
           </property>
+          <property name="rowCount" >
+           <number>20</number>
+          </property>
+          <property name="columnCount" >
+           <number>20</number>
+          </property>
+          <row/>
+          <row/>
+          <row/>
+          <row/>
+          <row/>
+          <row/>
+          <row/>
+          <row/>
+          <row/>
+          <row/>
+          <row/>
+          <row/>
+          <row/>
+          <row/>
+          <row/>
+          <row/>
+          <row/>
+          <row/>
+          <row/>
+          <row/>
+          <column/>
+          <column/>
+          <column/>
+          <column/>
+          <column/>
+          <column/>
+          <column/>
+          <column/>
+          <column/>
+          <column/>
+          <column/>
+          <column/>
+          <column/>
+          <column/>
+          <column/>
+          <column/>
+          <column/>
+          <column/>
+          <column/>
+          <column/>
          </widget>
         </item>
        </layout>
@@ -381,12 +427,12 @@
    <slot>animateClick()</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>20</x>
-     <y>20</y>
+     <x>211</x>
+     <y>98</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>20</x>
-     <y>20</y>
+     <x>179</x>
+     <y>98</y>
     </hint>
    </hints>
   </connection>
