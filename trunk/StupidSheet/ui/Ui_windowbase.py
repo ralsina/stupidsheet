@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'StupidSheet/ui/windowbase.ui'
 #
-# Created: Tue May 29 13:15:59 2007
+# Created: Tue May 29 14:20:12 2007
 #      by: PyQt4 UI code generator 4.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -66,7 +66,7 @@ class Ui_WindowBase(object):
         self.vboxlayout1.setObjectName("vboxlayout1")
 
         self.grid = QtGui.QTableWidget(self.tab)
-        self.grid.setEditTriggers(QtGui.QAbstractItemView.NoEditTriggers)
+        self.grid.setEditTriggers(QtGui.QAbstractItemView.AnyKeyPressed|QtGui.QAbstractItemView.DoubleClicked|QtGui.QAbstractItemView.NoEditTriggers)
         self.grid.setDragDropOverwriteMode(False)
         self.grid.setAlternatingRowColors(True)
         self.grid.setObjectName("grid")
@@ -193,9 +193,11 @@ class Ui_WindowBase(object):
     def retranslateUi(self, WindowBase):
         WindowBase.setWindowTitle(QtGui.QApplication.translate("WindowBase", "Form1", None, QtGui.QApplication.UnicodeUTF8))
         self.functions.setText(QtGui.QApplication.translate("WindowBase", "...", None, QtGui.QApplication.UnicodeUTF8))
+        self.grid.setRowCount(20)
+        self.grid.setColumnCount(20)
         self.grid.clear()
-        self.grid.setColumnCount(0)
-        self.grid.setRowCount(0)
+        self.grid.setColumnCount(20)
+        self.grid.setRowCount(20)
         self.tabWidget2.setTabText(self.tabWidget2.indexOf(self.tab), QtGui.QApplication.translate("WindowBase", "Page 1", None, QtGui.QApplication.UnicodeUTF8))
         self.fileMenu.setTitle(QtGui.QApplication.translate("WindowBase", "&File", None, QtGui.QApplication.UnicodeUTF8))
         self.editMenu.setTitle(QtGui.QApplication.translate("WindowBase", "&Edit", None, QtGui.QApplication.UnicodeUTF8))

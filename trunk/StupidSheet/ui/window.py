@@ -44,8 +44,17 @@ class Window(QtGui.QMainWindow):
         QtCore.QObject.connect(self.sheet,
                                QtCore.SIGNAL('changed'),
                                self.changeCell)
+        QtCore.QObject.connect(self.ui.grid,
+                               QtCore.SIGNAL('itemChanged(QTableWidgetItem *)'),
+                               self.updateEditor)
 
         self.ui.grid.setFocus()
+
+    def updateEditor(self,item):
+        self.editing=coordKey(item.column(),item.row())
+        print "key to update: ",self.editing,unicode(item.text())
+        self.ui.formula.setText(item.text())
+        self.saveFormulaSlot()
 
     def fileSaveAs(self):
         data=pickle.dumps(self.sheet._cells)
@@ -75,7 +84,7 @@ class Window(QtGui.QMainWindow):
         print x,y
         item=self.ui.grid.item(y,x)
         if not item:
-            item=QtGui.QTableWidgetItem('XXX')
+            item=QtGui.QTableWidgetItem('####')
             self.ui.grid.setItem(y,x,item)
         item.setText(str(self.sheet[key]))
         
