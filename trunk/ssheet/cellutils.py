@@ -57,12 +57,9 @@ def parse_cellref(cellref):
         else:
             expanded.append(label)
 
-    print 'expanded: ',expanded
-
     processed=['cell']
     is_abs=False
     for label in expanded:
-        print 'label: ',type(label),label
         if label=='ABS':
             is_abs=True
             continue
@@ -76,6 +73,7 @@ def parse_cellref(cellref):
                 processed.append(['relcol',label])
             else:
                 processed.append(['relrow',label])
+        is_abs=False
 
     return processed
 
