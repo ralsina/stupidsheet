@@ -1,10 +1,10 @@
 import math
 import sys
-from traxcompiler import Compiler
+from StupidSheet.compiler.traxcompiler import Compiler
 from PyQt4 import QtGui, QtCore
 from graph_lib import *
-import ssheet.functions as functions
-from ssheet.cellutils import *
+import StupidSheet.backend.functions as functions
+from StupidSheet.backend.cellutils import *
 
 class SpreadSheet(QtCore.QObject):
     _cells = {}

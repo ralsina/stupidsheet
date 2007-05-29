@@ -1,5 +1,5 @@
 from Ui_windowbase import Ui_WindowBase
-import engine
+import StupidSheet.backend.engine as engine
 from PyQt4 import QtCore, QtGui
 import opensave
 import os

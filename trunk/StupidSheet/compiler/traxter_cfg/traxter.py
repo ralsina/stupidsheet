@@ -1,7 +1,7 @@
 
 from aperiot.lexer import *
 
-imports = ['ssheet.cellutils']
+imports = ['StupidSheet.backend.cellutils']
 
 useindents = False
 usenewlines = False
