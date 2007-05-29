@@ -150,7 +150,6 @@
      <string>&amp;Help</string>
     </property>
     <addaction name="helpContentsAction" />
-    <addaction name="helpIndexAction" />
     <addaction name="separator" />
     <addaction name="helpAboutAction" />
    </widget>
@@ -158,9 +157,29 @@
    <addaction name="editMenu" />
    <addaction name="helpMenu" />
   </widget>
+  <widget class="QToolBar" name="toolBar" >
+   <property name="orientation" >
+    <enum>Qt::Horizontal</enum>
+   </property>
+   <attribute name="toolBarArea" >
+    <number>4</number>
+   </attribute>
+   <addaction name="fileNewAction" />
+   <addaction name="fileOpenAction" />
+   <addaction name="fileSaveAction" />
+   <addaction name="filePrintAction" />
+   <addaction name="separator" />
+   <addaction name="editUndoAction" />
+   <addaction name="editRedoAction" />
+   <addaction name="separator" />
+   <addaction name="editCutAction" />
+   <addaction name="editCopyAction" />
+   <addaction name="editPasteAction" />
+  </widget>
+  <widget class="QStatusBar" name="statusBar" />
   <action name="fileNewAction" >
    <property name="icon" >
-    <iconset>image2</iconset>
+    <iconset resource="icons.qrc" >:/icons/filenew.svg</iconset>
    </property>
    <property name="text" >
     <string>&amp;New</string>
@@ -174,7 +193,7 @@
   </action>
   <action name="fileOpenAction" >
    <property name="icon" >
-    <iconset>image3</iconset>
+    <iconset resource="icons.qrc" >:/icons/fileopen.svg</iconset>
    </property>
    <property name="text" >
     <string>&amp;Open...</string>
@@ -188,7 +207,7 @@
   </action>
   <action name="fileSaveAction" >
    <property name="icon" >
-    <iconset>image4</iconset>
+    <iconset resource="icons.qrc" >:/icons/filesave.svg</iconset>
    </property>
    <property name="text" >
     <string>&amp;Save</string>
@@ -201,6 +220,9 @@
    </property>
   </action>
   <action name="fileSaveAsAction" >
+   <property name="icon" >
+    <iconset resource="icons.qrc" >:/icons/filesaveas.svg</iconset>
+   </property>
    <property name="text" >
     <string>Save &amp;As...</string>
    </property>
@@ -213,7 +235,7 @@
   </action>
   <action name="filePrintAction" >
    <property name="icon" >
-    <iconset>image5</iconset>
+    <iconset resource="icons.qrc" >:/icons/fileprint.svg</iconset>
    </property>
    <property name="text" >
     <string>&amp;Print...</string>
@@ -226,6 +248,9 @@
    </property>
   </action>
   <action name="fileExitAction" >
+   <property name="icon" >
+    <iconset resource="icons.qrc" >:/icons/exit.svg</iconset>
+   </property>
    <property name="text" >
     <string>E&amp;xit</string>
    </property>
@@ -238,7 +263,7 @@
   </action>
   <action name="editUndoAction" >
    <property name="icon" >
-    <iconset>image6</iconset>
+    <iconset resource="icons.qrc" >:/icons/undo.svg</iconset>
    </property>
    <property name="text" >
     <string>&amp;Undo</string>
@@ -252,7 +277,7 @@
   </action>
   <action name="editRedoAction" >
    <property name="icon" >
-    <iconset>image7</iconset>
+    <iconset resource="icons.qrc" >:/icons/redo.svg</iconset>
    </property>
    <property name="text" >
     <string>&amp;Redo</string>
@@ -266,7 +291,7 @@
   </action>
   <action name="editCutAction" >
    <property name="icon" >
-    <iconset>image8</iconset>
+    <iconset resource="icons.qrc" >:/icons/editcut.svg</iconset>
    </property>
    <property name="text" >
     <string>Cu&amp;t</string>
@@ -280,7 +305,7 @@
   </action>
   <action name="editCopyAction" >
    <property name="icon" >
-    <iconset>image9</iconset>
+    <iconset resource="icons.qrc" >:/icons/editcopy.svg</iconset>
    </property>
    <property name="text" >
     <string>&amp;Copy</string>
@@ -294,7 +319,7 @@
   </action>
   <action name="editPasteAction" >
    <property name="icon" >
-    <iconset>image10</iconset>
+    <iconset resource="icons.qrc" >:/icons/editpaste.svg</iconset>
    </property>
    <property name="text" >
     <string>&amp;Paste</string>
@@ -308,7 +333,7 @@
   </action>
   <action name="editFindAction" >
    <property name="icon" >
-    <iconset>image11</iconset>
+    <iconset resource="icons.qrc" >:/icons/find.svg</iconset>
    </property>
    <property name="text" >
     <string>&amp;Find...</string>
@@ -321,22 +346,14 @@
    </property>
   </action>
   <action name="helpContentsAction" >
+   <property name="icon" >
+    <iconset resource="icons.qrc" >:/icons/help.svg</iconset>
+   </property>
    <property name="text" >
     <string>&amp;Contents...</string>
    </property>
    <property name="iconText" >
     <string>Contents</string>
-   </property>
-   <property name="shortcut" >
-    <string/>
-   </property>
-  </action>
-  <action name="helpIndexAction" >
-   <property name="text" >
-    <string>&amp;Index...</string>
-   </property>
-   <property name="iconText" >
-    <string>Index</string>
    </property>
    <property name="shortcut" >
     <string/>

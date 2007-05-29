@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'windowbase.ui'
+# Form implementation generated from reading ui file 'StupidSheet/ui/windowbase.ui'
 #
-# Created: Thu May 24 18:01:27 2007
+# Created: Tue May 29 13:03:43 2007
 #      by: PyQt4 UI code generator 4.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -86,57 +86,66 @@ class Ui_WindowBase(object):
         self.helpMenu.setObjectName("helpMenu")
         WindowBase.setMenuBar(self.MenuBar)
 
+        self.toolBar = QtGui.QToolBar(WindowBase)
+        self.toolBar.setOrientation(QtCore.Qt.Horizontal)
+        self.toolBar.setObjectName("toolBar")
+        WindowBase.addToolBar(self.toolBar)
+
+        self.statusBar = QtGui.QStatusBar(WindowBase)
+        self.statusBar.setObjectName("statusBar")
+        WindowBase.setStatusBar(self.statusBar)
+
         self.fileNewAction = QtGui.QAction(WindowBase)
-        self.fileNewAction.setIcon(QtGui.QIcon("image2"))
+        self.fileNewAction.setIcon(QtGui.QIcon(":/icons/filenew.svg"))
         self.fileNewAction.setObjectName("fileNewAction")
 
         self.fileOpenAction = QtGui.QAction(WindowBase)
-        self.fileOpenAction.setIcon(QtGui.QIcon("image3"))
+        self.fileOpenAction.setIcon(QtGui.QIcon(":/icons/fileopen.svg"))
         self.fileOpenAction.setObjectName("fileOpenAction")
 
         self.fileSaveAction = QtGui.QAction(WindowBase)
-        self.fileSaveAction.setIcon(QtGui.QIcon("image4"))
+        self.fileSaveAction.setIcon(QtGui.QIcon(":/icons/filesave.svg"))
         self.fileSaveAction.setObjectName("fileSaveAction")
 
         self.fileSaveAsAction = QtGui.QAction(WindowBase)
+        self.fileSaveAsAction.setIcon(QtGui.QIcon(":/icons/filesaveas.svg"))
         self.fileSaveAsAction.setObjectName("fileSaveAsAction")
 
         self.filePrintAction = QtGui.QAction(WindowBase)
-        self.filePrintAction.setIcon(QtGui.QIcon("image5"))
+        self.filePrintAction.setIcon(QtGui.QIcon(":/icons/fileprint.svg"))
         self.filePrintAction.setObjectName("filePrintAction")
 
         self.fileExitAction = QtGui.QAction(WindowBase)
+        self.fileExitAction.setIcon(QtGui.QIcon(":/icons/exit.svg"))
         self.fileExitAction.setObjectName("fileExitAction")
 
         self.editUndoAction = QtGui.QAction(WindowBase)
-        self.editUndoAction.setIcon(QtGui.QIcon("image6"))
+        self.editUndoAction.setIcon(QtGui.QIcon(":/icons/undo.svg"))
         self.editUndoAction.setObjectName("editUndoAction")
 
         self.editRedoAction = QtGui.QAction(WindowBase)
-        self.editRedoAction.setIcon(QtGui.QIcon("image7"))
+        self.editRedoAction.setIcon(QtGui.QIcon(":/icons/redo.svg"))
         self.editRedoAction.setObjectName("editRedoAction")
 
         self.editCutAction = QtGui.QAction(WindowBase)
-        self.editCutAction.setIcon(QtGui.QIcon("image8"))
+        self.editCutAction.setIcon(QtGui.QIcon(":/icons/editcut.svg"))
         self.editCutAction.setObjectName("editCutAction")
 
         self.editCopyAction = QtGui.QAction(WindowBase)
-        self.editCopyAction.setIcon(QtGui.QIcon("image9"))
+        self.editCopyAction.setIcon(QtGui.QIcon(":/icons/editcopy.svg"))
         self.editCopyAction.setObjectName("editCopyAction")
 
         self.editPasteAction = QtGui.QAction(WindowBase)
-        self.editPasteAction.setIcon(QtGui.QIcon("image10"))
+        self.editPasteAction.setIcon(QtGui.QIcon(":/icons/editpaste.svg"))
         self.editPasteAction.setObjectName("editPasteAction")
 
         self.editFindAction = QtGui.QAction(WindowBase)
-        self.editFindAction.setIcon(QtGui.QIcon("image11"))
+        self.editFindAction.setIcon(QtGui.QIcon(":/icons/find.svg"))
         self.editFindAction.setObjectName("editFindAction")
 
         self.helpContentsAction = QtGui.QAction(WindowBase)
+        self.helpContentsAction.setIcon(QtGui.QIcon(":/icons/help.svg"))
         self.helpContentsAction.setObjectName("helpContentsAction")
-
-        self.helpIndexAction = QtGui.QAction(WindowBase)
-        self.helpIndexAction.setObjectName("helpIndexAction")
 
         self.helpAboutAction = QtGui.QAction(WindowBase)
         self.helpAboutAction.setObjectName("helpAboutAction")
@@ -157,12 +166,22 @@ class Ui_WindowBase(object):
         self.editMenu.addSeparator()
         self.editMenu.addAction(self.editFindAction)
         self.helpMenu.addAction(self.helpContentsAction)
-        self.helpMenu.addAction(self.helpIndexAction)
         self.helpMenu.addSeparator()
         self.helpMenu.addAction(self.helpAboutAction)
         self.MenuBar.addAction(self.fileMenu.menuAction())
         self.MenuBar.addAction(self.editMenu.menuAction())
         self.MenuBar.addAction(self.helpMenu.menuAction())
+        self.toolBar.addAction(self.fileNewAction)
+        self.toolBar.addAction(self.fileOpenAction)
+        self.toolBar.addAction(self.fileSaveAction)
+        self.toolBar.addAction(self.filePrintAction)
+        self.toolBar.addSeparator()
+        self.toolBar.addAction(self.editUndoAction)
+        self.toolBar.addAction(self.editRedoAction)
+        self.toolBar.addSeparator()
+        self.toolBar.addAction(self.editCutAction)
+        self.toolBar.addAction(self.editCopyAction)
+        self.toolBar.addAction(self.editPasteAction)
 
         self.retranslateUi(WindowBase)
         QtCore.QObject.connect(self.formula,QtCore.SIGNAL("returnPressed()"),self.saveFormula.animateClick)
@@ -213,8 +232,6 @@ class Ui_WindowBase(object):
         self.editFindAction.setShortcut(QtGui.QApplication.translate("WindowBase", "Ctrl+F", None, QtGui.QApplication.UnicodeUTF8))
         self.helpContentsAction.setText(QtGui.QApplication.translate("WindowBase", "&Contents...", None, QtGui.QApplication.UnicodeUTF8))
         self.helpContentsAction.setIconText(QtGui.QApplication.translate("WindowBase", "Contents", None, QtGui.QApplication.UnicodeUTF8))
-        self.helpIndexAction.setText(QtGui.QApplication.translate("WindowBase", "&Index...", None, QtGui.QApplication.UnicodeUTF8))
-        self.helpIndexAction.setIconText(QtGui.QApplication.translate("WindowBase", "Index", None, QtGui.QApplication.UnicodeUTF8))
         self.helpAboutAction.setText(QtGui.QApplication.translate("WindowBase", "&About", None, QtGui.QApplication.UnicodeUTF8))
         self.helpAboutAction.setIconText(QtGui.QApplication.translate("WindowBase", "About", None, QtGui.QApplication.UnicodeUTF8))
 
