@@ -3,11 +3,11 @@
 import sys
 from PyQt4 import QtCore, QtGui
 
-from ssheet.window import Window
+import ssheet.window
 
 def main(args):
     app=QtGui.QApplication(sys.argv)
-    window=Window()
+    window=ssheet.window.Window()
     window.show()
     sys.exit(app.exec_())
 

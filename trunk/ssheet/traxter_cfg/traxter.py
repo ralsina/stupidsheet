@@ -30,6 +30,7 @@ ASSIGNMENT = 'ASSIGNMENT'
 CALCULATED = 'CALCULATED'
 ARG        = 'ARG'
 LIST       = 'LIST'
+MULRANGE   = 'MULRANGE'
 RANGE      = 'RANGE'
 EXPR       = 'EXPR'
 ARGLIST    = 'ARGLIST'
@@ -74,10 +75,13 @@ rules = \
                 ([ASSIGNMENT, semicolon, LIST], '[$1]+$3'), 
                 ([ASSIGNMENT, semicolon], '[$1]'), 
             ],
+        MULRANGE: 
+            [
+                ([RANGE, comma, RANGE], '[\'mulrange\',$1,$3]'), 
+            ],
         RANGE: 
             [
                 ([CALCULATED, colon, CALCULATED], '[\'range\',$1,$3]'), 
-                ([RANGE, comma, RANGE], '[\'mulrange\',$1,$3]'), 
             ],
         EXPR: 
             [
