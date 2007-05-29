@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'StupidSheet/ui/windowbase.ui'
 #
-# Created: Tue May 29 14:20:12 2007
+# Created: Tue May 29 16:23:46 2007
 #      by: PyQt4 UI code generator 4.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -82,11 +82,11 @@ class Ui_WindowBase(object):
         self.fileMenu = QtGui.QMenu(self.MenuBar)
         self.fileMenu.setObjectName("fileMenu")
 
-        self.editMenu = QtGui.QMenu(self.MenuBar)
-        self.editMenu.setObjectName("editMenu")
-
         self.helpMenu = QtGui.QMenu(self.MenuBar)
         self.helpMenu.setObjectName("helpMenu")
+
+        self.editMenu = QtGui.QMenu(self.MenuBar)
+        self.editMenu.setObjectName("editMenu")
         WindowBase.setMenuBar(self.MenuBar)
 
         self.toolBar = QtGui.QToolBar(WindowBase)
@@ -152,6 +152,11 @@ class Ui_WindowBase(object):
 
         self.helpAboutAction = QtGui.QAction(WindowBase)
         self.helpAboutAction.setObjectName("helpAboutAction")
+
+        self.actionEdit_Cell = QtGui.QAction(WindowBase)
+        self.actionEdit_Cell.setShortcutContext(QtCore.Qt.ApplicationShortcut)
+        self.actionEdit_Cell.setVisible(False)
+        self.actionEdit_Cell.setObjectName("actionEdit_Cell")
         self.fileMenu.addAction(self.fileNewAction)
         self.fileMenu.addAction(self.fileOpenAction)
         self.fileMenu.addAction(self.fileSaveAction)
@@ -160,6 +165,9 @@ class Ui_WindowBase(object):
         self.fileMenu.addAction(self.filePrintAction)
         self.fileMenu.addSeparator()
         self.fileMenu.addAction(self.fileExitAction)
+        self.helpMenu.addAction(self.helpContentsAction)
+        self.helpMenu.addSeparator()
+        self.helpMenu.addAction(self.helpAboutAction)
         self.editMenu.addAction(self.editUndoAction)
         self.editMenu.addAction(self.editRedoAction)
         self.editMenu.addSeparator()
@@ -168,9 +176,8 @@ class Ui_WindowBase(object):
         self.editMenu.addAction(self.editPasteAction)
         self.editMenu.addSeparator()
         self.editMenu.addAction(self.editFindAction)
-        self.helpMenu.addAction(self.helpContentsAction)
-        self.helpMenu.addSeparator()
-        self.helpMenu.addAction(self.helpAboutAction)
+        self.editMenu.addSeparator()
+        self.editMenu.addAction(self.actionEdit_Cell)
         self.MenuBar.addAction(self.fileMenu.menuAction())
         self.MenuBar.addAction(self.editMenu.menuAction())
         self.MenuBar.addAction(self.helpMenu.menuAction())
@@ -200,8 +207,8 @@ class Ui_WindowBase(object):
         self.grid.setRowCount(20)
         self.tabWidget2.setTabText(self.tabWidget2.indexOf(self.tab), QtGui.QApplication.translate("WindowBase", "Page 1", None, QtGui.QApplication.UnicodeUTF8))
         self.fileMenu.setTitle(QtGui.QApplication.translate("WindowBase", "&File", None, QtGui.QApplication.UnicodeUTF8))
-        self.editMenu.setTitle(QtGui.QApplication.translate("WindowBase", "&Edit", None, QtGui.QApplication.UnicodeUTF8))
         self.helpMenu.setTitle(QtGui.QApplication.translate("WindowBase", "&Help", None, QtGui.QApplication.UnicodeUTF8))
+        self.editMenu.setTitle(QtGui.QApplication.translate("WindowBase", "&Edit", None, QtGui.QApplication.UnicodeUTF8))
         self.fileNewAction.setText(QtGui.QApplication.translate("WindowBase", "&New", None, QtGui.QApplication.UnicodeUTF8))
         self.fileNewAction.setIconText(QtGui.QApplication.translate("WindowBase", "New", None, QtGui.QApplication.UnicodeUTF8))
         self.fileNewAction.setShortcut(QtGui.QApplication.translate("WindowBase", "Ctrl+N", None, QtGui.QApplication.UnicodeUTF8))
@@ -240,5 +247,7 @@ class Ui_WindowBase(object):
         self.helpContentsAction.setIconText(QtGui.QApplication.translate("WindowBase", "Contents", None, QtGui.QApplication.UnicodeUTF8))
         self.helpAboutAction.setText(QtGui.QApplication.translate("WindowBase", "&About", None, QtGui.QApplication.UnicodeUTF8))
         self.helpAboutAction.setIconText(QtGui.QApplication.translate("WindowBase", "About", None, QtGui.QApplication.UnicodeUTF8))
+        self.actionEdit_Cell.setText(QtGui.QApplication.translate("WindowBase", "Edit Cell", None, QtGui.QApplication.UnicodeUTF8))
+        self.actionEdit_Cell.setShortcut(QtGui.QApplication.translate("WindowBase", "F2", None, QtGui.QApplication.UnicodeUTF8))
 
 import icons_rc
