@@ -64,7 +64,6 @@ def regurgitate(assignlist):
         and produces traxter code.'''
         return ';'.join([regurgitate_assignment(a) for a in assignlist])
 
-
 if __name__=="__main__":
         from aperiot.parsergen import build_parser
         traxparser = build_parser('traxter')

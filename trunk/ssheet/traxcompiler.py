@@ -20,7 +20,7 @@ def groupOp(*args):
         return '(%s)'%compile_token(args[0])
 
 def funcOp(*args):
-        return '%s(%s)'%(args[0].symbolic_name,
+        return '%s(%s)'%(args[0],
                          ','.join([compile_token(a) for a in args[1]]))
 
 def rangeOp(*args):
@@ -68,6 +68,7 @@ def traxcompile(source):
     traxparser = build_parser('traxter')
     assign_list=traxparser.parse(source)
     for assignment in assign_list:
+            pprint(assignment)
             dependencies=set()
             var,c=compile_assignment(assignment)
             compiled[var]=[c,dependencies]

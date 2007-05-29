@@ -60,7 +60,7 @@ rules = \
                 ([label, absolute, number], 'parse_cellref([\'cellref\',$1.symbolic_name,\'ABS\',str(int($3))])'), 
                 ([absolute, label, absolute, number], 'parse_cellref([\'cellref\',\'ABS\',$2.symbolic_name,\'ABS\',str(int($4))])'), 
                 ([label], 'parse_cellref([\'cellref\',$1.symbolic_name])'), 
-                ([label, lpar, ARGLIST, rpar], '[\'funcall\',$1,$3]'), 
+                ([label, lpar, ARGLIST, rpar], '[\'funcall\',$1.symbolic_name,$3]'), 
             ],
         ARG: 
             [
