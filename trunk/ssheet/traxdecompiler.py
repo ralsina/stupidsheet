@@ -3,33 +3,33 @@ import sys
 import aperiot
 
 def addOp(*args):
-        return '+'.join([compile_token(a) for a in args])
+        return '+'.join([decompile_token(a) for a in args])
 def mulOp(*args):
-        return '*'.join([compile_token(a) for a in args])
+        return '*'.join([decompile_token(a) for a in args])
 def subOp(*args):
-        return '-'.join([compile_token(a) for a in args])
+        return '-'.join([decompile_token(a) for a in args])
 def divOp(*args):
-        return '/'.join([compile_token(a) for a in args])
+        return '/'.join([decompile_token(a) for a in args])
 
 def groupOp(*args):
-        return '(%s)'%compile_token(args[0])
+        return '(%s)'%decompile_token(args[0])
 
 def funcOp(*args):
-        return '%s(%s)'%(args[0].symbolic_name,
-                         ','.join([compile_token(a) for a in args[1]]))
+        return '%s(%s)'%(args[0],
+                         ','.join([decompile_token(a) for a in args[1]]))
 
 def rangeOp(*args):
-        c1=compile_token(args[0])
-        c2=compile_token(args[1])
+        c1=decompile_token(args[0])
+        c2=decompile_token(args[1])
         return '%s:%s'%(c1,c2)
 def cellOp(*args):
-        return ''.join([compile_token(a) for a in args])
+        return ''.join([decompile_token(a) for a in args])
 def absOp(*args):
         return '$'+str(args[0])
 def relOp(*args):
         return str(args[0])
 
-def compile_token(token):
+def decompile_token(token):
         if isinstance (token,aperiot.lexer.Identifier):
                 v=token.symbolic_name.lower()
                 dependencies.add(v)
@@ -53,10 +53,12 @@ operators={'+':addOp,
            'absrow':absOp
            }
 
+
+
 def regurgitate_assignment(assignment):
         '''Takes a single assignment and returns traxter code'''
         var=assignment[0]
-        code=compile_token(assignment[1])
+        code=decompile_token(assignment[1])
         return '%s=%s'%(var.symbolic_name,code)
 
 def regurgitate(assignlist):
