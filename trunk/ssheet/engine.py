@@ -24,11 +24,13 @@ class SpreadSheet(QtCore.QObject):
 
         # Dependency graph
         if not self.graph.has_node(key):
-                self.graph.add_node(key)
+            self.graph.add_node(key)
         for edge in self.graph.in_arcs(key):
-                self.graph.delete_edge(edge)
+            self.graph.delete_edge(edge)
         for cell in c[key][1]:
-                self.graph.add_edge(cell,key)
+            if not self.graph.has_node(cell):
+                self.graph.add_node(cell)
+            self.graph.add_edge(cell,key)
         try:
                 print 'GRAPH(TOPO): ',self.graph.topological_sort()
                 self._cells[key][1]=False
@@ -48,12 +50,13 @@ class SpreadSheet(QtCore.QObject):
         key=key.lower()
         return self._cells[key][0]
     def __getitem__(self, key ):
-        print self._cells[key]
+        if not self._cells.has_key(key):
+            return 0
         if self._cells[key][1]:
-                return "ERROR: cyclic dependency"
+            return "ERROR: cyclic dependency"
         else:
-                print 'evaluating [%s]: '%key,type(self._cells[key][0]),self._cells[key][0]
-                return eval(self._cells[key][0], self.tools, self)
+            print 'evaluating [%s]: '%key,type(self._cells[key][0]),self._cells[key][0]
+            return eval(self._cells[key][0], self.tools, self)
 
 
         
