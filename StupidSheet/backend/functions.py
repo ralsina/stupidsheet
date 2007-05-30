@@ -1,6 +1,11 @@
-from math import *
+import math as __math__
 
-def sum(*args):
+for name in dir(__math__):
+    o=eval('__math__.'+name)
+    if '__call__' in dir(o):
+        exec('%s=__math__.%s'%(name.upper(), name))
+    
+def SUM(*args):
         print args
         ac=0
         for arg in args:

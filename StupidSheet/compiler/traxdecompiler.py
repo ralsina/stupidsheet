@@ -17,7 +17,7 @@ def groupOp(*args):
         return '(%s)'%decompile_token(args[0])
 
 def funcOp(*args):
-        return '%s(%s)'%(args[0],
+        return '%s(%s)'%(args[0].upper(),
                          ','.join([decompile_token(a) for a in args[1]]))
 
 def rangeOp(*args):
