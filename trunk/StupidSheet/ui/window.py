@@ -101,6 +101,18 @@ class Window(QtGui.QMainWindow):
 
         try:
             f=self.sheet.getformula(label)
+            # Need to decide if it's a formula or just a string            
+            # Sure there are corner cases here but since classic
+            # spreadsheet formulas don't support strings...
+            if not f:
+                pass
+            # A special case for historical reasons
+            elif f[0]=="'":
+                pass
+            elif f[0]=='"' and f[-1]=='"':
+                f="'"+f[1:-1]
+            else: #A formula
+                f='='+f
         except KeyError:
             f=''
         self.ui.formula.setText(f)
@@ -109,7 +121,15 @@ class Window(QtGui.QMainWindow):
         self.ui.formula.setFocus()
         
     def saveFormulaSlot(self):
-        self.sheet[self.editing]=str(self.ui.formula.text())
+        # Let's do this the braindead way everyone does it:
+        formula=str(self.ui.formula.text())
+        if formula[0]=='=':
+            self.sheet[self.editing]=formula[1:]
+        elif formula[0]=="'": #Historical special case
+            self.sheet[self.editing]='"%s"'%formula[1:]
+        else:
+            self.sheet[self.editing]='"%s"'%formula
+            
         self.ui.saveFormula.setEnabled(False)
         self.ui.cancelFormula.setEnabled(False)
         self.ui.namebox.clear()
