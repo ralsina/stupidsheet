@@ -1,0 +1,7 @@
+IDEAS I SHOULD REMEMBER
+-----------------------
+
+* Try using cellulose for the engine
+
+* Try using esrapy for the parser
+
