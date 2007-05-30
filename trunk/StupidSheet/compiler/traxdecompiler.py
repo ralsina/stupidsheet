@@ -45,7 +45,6 @@ def decompile_token(token):
             return apply(operators[token[0]],token[1:])
         return str(token)
 
-
 operators={'+':addOp,
            '-':subOp,
            '*':mulOp,
