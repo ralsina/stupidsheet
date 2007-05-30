@@ -90,8 +90,6 @@ class Compiler:
                     return token.symbolic_name.lower()
                 if isinstance(token,list):
                     return apply(operators[token[0]],[self]+token[1:])
-                if isinstance(token, str):
-                    return str(token)
                 return str(token)
 
         def compile_assignment(self,tokens):
