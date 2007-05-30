@@ -21,6 +21,7 @@ lpar = Bracket('(', 'lpar')
 rpar = Bracket(')', 'rpar')
 label = Identifier
 number = NumberLiteral
+string = StringLiteral
 
 
 # Non-terminal symbols
@@ -100,6 +101,7 @@ rules = \
                 ([lpar, EXPR, rpar], '[\'group\',$2]'), 
                 ([minus, FACTOR], '-$2'), 
                 ([CALCULATED], '$1'), 
+                ([string], '[ \'string\', $1]'), 
             ],
     }
 

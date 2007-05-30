@@ -30,6 +30,8 @@ def cellOp(self,*args):
 def elemOp(self,*args):
         return str(args[0])
 
+def stringOp(self, *args):
+    return r'"""%s"""'%args[0].string
 
 operators={'+':addOp,
            '-':subOp,
@@ -42,7 +44,8 @@ operators={'+':addOp,
            'relcol':elemOp,
            'abscol':elemOp,
            'relrow':elemOp,
-           'absrow':elemOp
+           'absrow':elemOp, 
+           'string':stringOp
            }
 
 
@@ -87,6 +90,8 @@ class Compiler:
                     return token.symbolic_name.lower()
                 if isinstance(token,list):
                     return apply(operators[token[0]],[self]+token[1:])
+                if isinstance(token, str):
+                    return str(token)
                 return str(token)
 
         def compile_assignment(self,tokens):
@@ -112,8 +117,5 @@ if __name__=="__main__":
         pprint (c.compile(t))
         print
         print
-        t='A1=1;A2=A1+1;'
+        t='A1="Hello world!";'
         pprint (c.compile(t))
-
-
-
