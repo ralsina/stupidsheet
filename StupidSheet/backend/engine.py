@@ -1,7 +1,7 @@
 import math
 import sys
 from StupidSheet.compiler.traxcompiler import Compiler
-from StupidSheet.compiler.traxdecompiler import displace_formula
+from StupidSheet.compiler.traxdecompiler import displace_source
 from PyQt4 import QtGui, QtCore
 from graph_lib import *
 import StupidSheet.backend.functions as functions
@@ -21,7 +21,7 @@ class SpreadSheet(QtCore.QObject):
 
     def __setitem__(self, key, formula):
         key=key.lower()
-        c=self.compiler.compile(formula)
+        c=self.compiler.compile('%s=%s;'%(key,formula))
         self._cells[key] = [c[key][0],
                             False,
                             compile(c[key][0],"Formula for %s"%key,'eval'),
@@ -57,6 +57,7 @@ class SpreadSheet(QtCore.QObject):
                 return self._cells[key][-1]
         else:
                 return ''
+
     def __getitem__(self, key ):
         if not self._cells.has_key(key) and isKey(key):
             print 'unknown cell: ', key
@@ -70,21 +71,12 @@ class SpreadSheet(QtCore.QObject):
             print r
             return r
 
-    def getDisplacedFormula(self,keyFrom,keyTo):
-        f1=self.getformula(keyFrom)
-        if not f1:
-            return f1
-        print 'Displacing: ',f1
-        displaced=displace_formula(f1,keyFrom,keyTo)
+    def displaceFormula(self,formula,keyFrom,keyTo):
+        print 'Displacing: ',formula
+        displaced=displace_source(formula,keyFrom,keyTo)
         print 'Displaced: ',displaced
-        return displaced
+        return displaced[displaced.find('=')+1:]
 
-
-
-
-
-
-        
 if __name__ == "__main__":  
     ss = SpreadSheet(None)
     ss['a1'] = '5'

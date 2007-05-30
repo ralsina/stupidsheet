@@ -103,13 +103,13 @@ class Window(QtGui.QMainWindow):
             f=self.sheet.getformula(label)
         except KeyError:
             f=''
-        self.ui.formula.setText('='.join(f.split('=')[1:])[:-1])
+        self.ui.formula.setText(f)
         self.ui.saveFormula.setEnabled(True)
         self.ui.cancelFormula.setEnabled(True)
         self.ui.formula.setFocus()
         
     def saveFormulaSlot(self):
-        self.sheet[self.editing]='%s=%s;'%(self.editing,str(self.ui.formula.text()))
+        self.sheet[self.editing]=str(self.ui.formula.text())
         self.ui.saveFormula.setEnabled(False)
         self.ui.cancelFormula.setEnabled(False)
         self.ui.namebox.clear()
@@ -152,7 +152,7 @@ class Window(QtGui.QMainWindow):
                     key=coordKey(x,y)
                     f=self.sheet.getformula(key)
                     if f:
-                        self.clipboard[key]=self.sheet.getformula(key)
+                        self.clipboard[key]='%s=%s;'%(key,self.sheet.getformula(key))
 
         print self.clipboard,self.clipboard_width,self.clipboard_height,self.clipPos
 
@@ -216,7 +216,9 @@ class Window(QtGui.QMainWindow):
                                    self.clipPos[1]+dy1)
 
                 print targetKey,sourceKey,dx1,dy1,dx2,dy2
-                self.sheet.getDisplacedFormula(sourceKey,targetKey)
+                if sourceKey in self.clipboard:
+                        self.sheet[targetKey]=self.sheet.displaceFormula(self.clipboard[sourceKey],sourceKey,targetKey)
+                        self.changeCell(targetKey)
 
 
         # Find the matching origin cell considering tiling

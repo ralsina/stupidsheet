@@ -82,7 +82,7 @@ def displace_cell(token,dx,dy):
                 token[2][1]=r
 
 # FIXME make it less incredibly awful
-def displace_formula(formula,key_from,key_to):
+def displace_source(source,key_from,key_to):
         # Basically, I am remplementing aperiot's load_parser
         # because it's broken when your project is in
         # more than one folder
@@ -100,9 +100,13 @@ def displace_formula(formula,key_from,key_to):
         x2,y2=keyCoord(key_to)
         dx=x2-x1
         dy=y2-y1
+
         # Traverse formula applying displace_cell
-        tree=traxparser.parse(formula)
-        traverse_tree(tree,displace_cell,[dx,dy])
+        tree=traxparser.parse(source)
+        for assignment in tree:
+                traverse_tree(assignment,displace_cell,[dx,dy])
+                ax,ay=keyCoord(assignment[0].symbolic_name)
+                assignment[0]=aperiot.lexer.Identifier(coordKey(ax+dx,ay+dy))
         return regurgitate(tree)
 
 if __name__=="__main__":
