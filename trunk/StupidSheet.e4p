@@ -1,82 +1,146 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE Project SYSTEM "Project-4.0.dtd">
-<!-- eric4 project file for project StupidSheet -->
-<!-- Saved: 2007-05-29, 09:59:16 -->
+<!-- eric4 project file for project Stupid Sheet -->
+<!-- Saved: 2007-05-30, 11:28:27 -->
 <!-- Copyright (C) 2007 Roberto Alsina, ralsina@kde.org -->
 <Project version="4.0">
   <ProgLanguage mixed="0">Python</ProgLanguage>
   <UIType>Qt4</UIType>
-  <Description>A Stupid SpreadSheet</Description>
+  <Description>A  pure python spreadsheet.</Description>
   <Version>0.1</Version>
   <Author>Roberto Alsina</Author>
   <Email>ralsina@kde.org</Email>
   <Sources>
     <Source>
-      <Name>ssheet.py</Name>
-    </Source>
-    <Source>
-      <Dir>ssheet</Dir>
-      <Name>engine.py</Name>
-    </Source>
-    <Source>
-      <Dir>ssheet</Dir>
-      <Name>window.py</Name>
-    </Source>
-    <Source>
-      <Dir>ssheet</Dir>
-      <Name>__init__.py</Name>
-    </Source>
-    <Source>
-      <Dir>ssheet</Dir>
-      <Name>opensave.py</Name>
+      <Name>stupid.py</Name>
     </Source>
     <Source>
       <Name>setup.py</Name>
     </Source>
     <Source>
-      <Dir>ssheet</Dir>
-      <Name>Ui_windowbase.py</Name>
-    </Source>
-    <Source>
-      <Dir>ssheet</Dir>
-      <Name>cellutils.py</Name>
-    </Source>
-    <Source>
-      <Dir>ssheet</Dir>
+      <Dir>StupidSheet</Dir>
+      <Dir>compiler</Dir>
       <Name>traxcompiler.py</Name>
     </Source>
     <Source>
-      <Dir>ssheet</Dir>
+      <Dir>StupidSheet</Dir>
+      <Dir>compiler</Dir>
+      <Name>traxdecompiler.py</Name>
+    </Source>
+    <Source>
+      <Dir>StupidSheet</Dir>
+      <Dir>compiler</Dir>
+      <Dir>traxter_cfg</Dir>
+      <Name>__init__.py</Name>
+    </Source>
+    <Source>
+      <Dir>StupidSheet</Dir>
+      <Dir>compiler</Dir>
+      <Dir>traxter_cfg</Dir>
+      <Name>traxter.py</Name>
+    </Source>
+    <Source>
+      <Dir>StupidSheet</Dir>
+      <Dir>compiler</Dir>
+      <Dir>traxter_cfg</Dir>
+      <Name>traxter_cfg_ll1_cfg_wan.py</Name>
+    </Source>
+    <Source>
+      <Dir>StupidSheet</Dir>
+      <Dir>compiler</Dir>
+      <Dir>traxter_cfg</Dir>
+      <Name>traxter_cfg_ll1_actions.py</Name>
+    </Source>
+    <Source>
+      <Dir>StupidSheet</Dir>
+      <Dir>compiler</Dir>
+      <Name>__init__.py</Name>
+    </Source>
+    <Source>
+      <Dir>StupidSheet</Dir>
+      <Dir>ui</Dir>
+      <Name>Ui_windowbase.py</Name>
+    </Source>
+    <Source>
+      <Dir>StupidSheet</Dir>
+      <Dir>ui</Dir>
+      <Name>window.py</Name>
+    </Source>
+    <Source>
+      <Dir>StupidSheet</Dir>
+      <Dir>ui</Dir>
+      <Name>opensave.py</Name>
+    </Source>
+    <Source>
+      <Dir>StupidSheet</Dir>
+      <Dir>ui</Dir>
+      <Name>icons_rc.py</Name>
+    </Source>
+    <Source>
+      <Dir>StupidSheet</Dir>
+      <Dir>ui</Dir>
+      <Name>__init__.py</Name>
+    </Source>
+    <Source>
+      <Dir>StupidSheet</Dir>
+      <Dir>backend</Dir>
       <Name>graph_lib.py</Name>
     </Source>
     <Source>
-      <Dir>ssheet</Dir>
+      <Dir>StupidSheet</Dir>
+      <Dir>backend</Dir>
+      <Name>engine.py</Name>
+    </Source>
+    <Source>
+      <Dir>StupidSheet</Dir>
+      <Dir>backend</Dir>
+      <Name>cellutils.py</Name>
+    </Source>
+    <Source>
+      <Dir>StupidSheet</Dir>
+      <Dir>backend</Dir>
       <Name>functions.py</Name>
     </Source>
     <Source>
-      <Dir>ssheet</Dir>
-      <Name>traxdecompiler.py</Name>
+      <Dir>StupidSheet</Dir>
+      <Dir>backend</Dir>
+      <Name>__init__.py</Name>
+    </Source>
+    <Source>
+      <Dir>StupidSheet</Dir>
+      <Name>__init__.py</Name>
+    </Source>
+    <Source>
+      <Dir>StupidSheet</Dir>
+      <Dir>compiler</Dir>
+      <Name>traxter.apr</Name>
     </Source>
   </Sources>
   <Forms>
     <Form>
-      <Dir>ssheet</Dir>
+      <Dir>StupidSheet</Dir>
+      <Dir>ui</Dir>
       <Name>windowbase.ui</Name>
     </Form>
   </Forms>
   <Translations>
   </Translations>
   <Resources>
+    <Resource>
+      <Dir>StupidSheet</Dir>
+      <Dir>ui</Dir>
+      <Name>icons.qrc</Name>
+    </Resource>
   </Resources>
   <Interfaces>
   </Interfaces>
   <Others>
   </Others>
   <MainScript>
-    <Name>ssheet.py</Name>
+    <Name>stupid.py</Name>
   </MainScript>
   <Vcs>
-    <VcsType>CVS</VcsType>
+    <VcsType>Subversion</VcsType>
     <VcsOptions>
       <dict>
         <key>
@@ -84,7 +148,6 @@
         </key>
         <value>
           <list>
-            <string>-v</string>
           </list>
         </value>
         <key>
@@ -92,7 +155,6 @@
         </key>
         <value>
           <list>
-            <string></string>
           </list>
         </value>
         <key>
@@ -100,7 +162,6 @@
         </key>
         <value>
           <list>
-            <string>-f</string>
           </list>
         </value>
         <key>
@@ -108,7 +169,6 @@
         </key>
         <value>
           <list>
-            <string>-dP</string>
           </list>
         </value>
         <key>
@@ -116,7 +176,6 @@
         </key>
         <value>
           <list>
-            <string>-f</string>
           </list>
         </value>
         <key>
@@ -124,7 +183,6 @@
         </key>
         <value>
           <list>
-            <string></string>
           </list>
         </value>
         <key>
@@ -132,7 +190,6 @@
         </key>
         <value>
           <list>
-            <string>-c</string>
           </list>
         </value>
         <key>
@@ -140,7 +197,6 @@
         </key>
         <value>
           <list>
-            <string></string>
           </list>
         </value>
         <key>
@@ -148,7 +204,6 @@
         </key>
         <value>
           <list>
-            <string></string>
           </list>
         </value>
         <key>
@@ -156,8 +211,6 @@
         </key>
         <value>
           <list>
-            <string>-u3</string>
-            <string>-p</string>
           </list>
         </value>
         <key>
@@ -165,7 +218,6 @@
         </key>
         <value>
           <list>
-            <string></string>
           </list>
         </value>
         <key>
@@ -173,8 +225,6 @@
         </key>
         <value>
           <list>
-            <string>-e</string>
-            <string>-a</string>
           </list>
         </value>
       </dict>
