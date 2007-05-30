@@ -31,6 +31,11 @@ def absOp(*args):
 def relOp(*args):
         return str(args[0])
 
+def stringOp(*args):
+    print 'stringOp: ', args
+    return r'"%s"'%args[0].string
+
+
 def decompile_token(token):
         if isinstance (token,aperiot.lexer.Identifier):
                 v=token.symbolic_name.lower()
@@ -52,7 +57,8 @@ operators={'+':addOp,
            'relcol':relOp,
            'abscol':absOp,
            'relrow':relOp,
-           'absrow':absOp
+           'absrow':absOp, 
+           'string':stringOp
            }
 
 def regurgitate_assignment(assignment):
@@ -103,6 +109,7 @@ def displace_source(source,key_from,key_to):
 
         # Traverse formula applying displace_cell
         tree=traxparser.parse(source)
+        pprint(tree)
         for assignment in tree:
                 traverse_tree(assignment,displace_cell,[dx,dy])
                 ax,ay=keyCoord(assignment[0].symbolic_name)
@@ -111,8 +118,7 @@ def displace_source(source,key_from,key_to):
 
 if __name__=="__main__":
         from aperiot.parsergen import build_parser
-        traxparser = build_parser('traxter')
         #t='A1=SUM(A1:A7);A1=SUM(AVG(A1:A7))*2;A1=$A1+A$1+$A$1+A1;'
         #pprint (regurgitate(traxparser.parse(t)))
-        t='A1=A1;'
-        pprint (regurgitate(displace_formula(traxparser.parse(t),'A1','B2')))
+        t='A1="AA";'
+        pprint (regurgitate(displace_source(t,'A1','B2')))

@@ -104,6 +104,7 @@ class Window(QtGui.QMainWindow):
             # Need to decide if it's a formula or just a string            
             # Sure there are corner cases here but since classic
             # spreadsheet formulas don't support strings...
+            
             if not f:
                 pass
             # A special case for historical reasons
@@ -128,7 +129,11 @@ class Window(QtGui.QMainWindow):
         elif formula[0]=="'": #Historical special case
             self.sheet[self.editing]='"%s"'%formula[1:]
         else:
-            self.sheet[self.editing]='"%s"'%formula
+            try:
+                float(formula)
+                self.sheet[self.editing]=formula
+            except ValueError:
+                self.sheet[self.editing]='"%s"'%formula
             
         self.ui.saveFormula.setEnabled(False)
         self.ui.cancelFormula.setEnabled(False)
