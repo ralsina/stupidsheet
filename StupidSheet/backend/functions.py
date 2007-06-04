@@ -6,8 +6,12 @@ for name in dir(__math__):
         exec('%s=__math__.%s'%(name.upper(), name))
     
 def SUM(*args):
-        print args
-        ac=0
-        for arg in args:
-                ac+=arg
-        return ac
+    print args
+    ac=0
+    for arg in args:
+        ac+=arg
+    return ac
+
+def IF(*args):
+    cond, t, f=args
+    print cond, t, f

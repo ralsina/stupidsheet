@@ -21,18 +21,18 @@ class SpreadSheet(QtCore.QObject):
 
     def __setitem__(self, key, formula):
         key=key.lower()
-        c=self.compiler.compile('%s=%s;'%(key,formula))
-        self._cells[key] = [c[key][0],
+        key, code, deps =self.compiler.compile('%s=%s'%(key,formula))
+        self._cells[key] = [code,
                             False,
-                            compile(c[key][0],"Formula for %s"%key,'eval'),
+                            compile(code,"Formula for %s"%key,'eval'),
                             formula]
         # Dependency graph
         if not self.graph.has_node(key):
             self.graph.add_node(key)
         for edge in self.graph.in_arcs(key):
             self.graph.delete_edge(edge)
-        print 'deps: ',c[key][1]
-        for cell in c[key][1]:
+        print 'deps: ',deps
+        for cell in deps:
             if not self.graph.has_node(cell):
                 self.graph.add_node(cell)
             self.graph.add_edge(cell,key)

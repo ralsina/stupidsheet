@@ -2,7 +2,7 @@
 
 echo "Regenerating Traxter parser"
 apr -f -d StupidSheet/compiler/ StupidSheet/compiler/traxter.apr
-
+exit
 echo "Compiling UI files"
 for ui in StupidSheet/ui/*.ui
 do

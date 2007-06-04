@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'StupidSheet/ui/windowbase.ui'
 #
-# Created: Wed May 30 11:54:59 2007
+# Created: Wed May 30 17:36:49 2007
 #      by: PyQt4 UI code generator 4.2
 #
 # WARNING! All changes made in this file will be lost!
