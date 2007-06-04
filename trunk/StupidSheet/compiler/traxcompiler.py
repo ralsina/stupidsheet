@@ -32,8 +32,10 @@ def elemOp(self,*args):
 def stringOp(self, *args):
     return args[0]
 
-def eqOp(self, *args):
-    return '%s==%s'%(self.compile_token(args[0]),self.compile_token(args[1])) 
+def boolOp(self, *args):
+    return '%s%s%s'%(self.compile_token(args[1]),
+                     self.compile_token(args[0]),
+                     self.compile_token(args[2]))
 
 operators={'+':addOp,
            '-':subOp,
@@ -48,7 +50,7 @@ operators={'+':addOp,
            'relrow':elemOp,
            'absrow':elemOp, 
            'string':stringOp, 
-           '==':eqOp
+           'bool':boolOp
            }
 
 
@@ -96,5 +98,5 @@ if __name__=="__main__":
         pprint (c.compile(t))
         print
         print
-        t='A1=IF(A2=A1, 1, 0)'
+        t='A1=IF(A2=A1, 1, IF(A2<A1,0,1))'
         pprint (c.compile(t))
