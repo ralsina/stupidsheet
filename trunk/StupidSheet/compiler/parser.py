@@ -16,14 +16,15 @@ tokens = (
    'RANGE',
    'ID', 
    'CELL',
-   'SEMICOLON'
+   'STRING', 
+   'SEMICOLON' 
 )
 
 def t_RANGE(t):
     r'\${0,1}[a-zA-Z]{1,2}\${0,1}[0-9]{1,5}:\${0,1}[a-zA-Z]{1,2}\${0,1}[0-9]{1,5}'
     t.type='RANGE'
     return t
-    
+
 def t_CELL(t):
     r'\${0,1}[a-zA-Z]{1,2}\${0,1}[0-9]{1,5}'
     t.type='CELL'
@@ -57,6 +58,7 @@ t_LPAREN  = r'\('
 t_RPAREN  = r'\)'
 t_COMMA   = r'\,'
 t_SEMICOLON   = r'\;'
+t_STRING  = r'\"[^"]*\"'
 
 # A regular expression rule with some action code
 def t_NUMBER(t):
@@ -149,6 +151,10 @@ def p_factor_num(p):
 def p_factor_expr(p):
     'factor : LPAREN expression RPAREN'
     p[0] = p[2]
+
+def p_factor_str(p):
+    'factor : STRING'
+    p[0] = ['string', p[1]]
 
 def p_factor_funcall(p):
     'factor : funcall'

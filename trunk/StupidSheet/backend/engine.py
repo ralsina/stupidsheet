@@ -22,6 +22,7 @@ class SpreadSheet(QtCore.QObject):
     def __setitem__(self, key, formula):
         key=key.lower()
         key, code, deps =self.compiler.compile('%s=%s'%(key,formula))
+        print key, code, deps
         self._cells[key] = [code,
                             False,
                             compile(code,"Formula for %s"%key,'eval'),

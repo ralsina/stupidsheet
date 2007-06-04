@@ -32,7 +32,7 @@ def relOp(*args):
         return str(args[0])
 
 def stringOp(*args):
-    return r'"%s"'%args[0].string
+    return r'%s'%args[0]
 
 
 def decompile_token(token):
