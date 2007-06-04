@@ -177,7 +177,7 @@ class Window(QtGui.QMainWindow):
                     key=coordKey(x,y)
                     f=self.sheet.getformula(key)
                     if f:
-                        self.clipboard[key]='%s=%s;'%(key,self.sheet.getformula(key))
+                        self.clipboard[key]='%s=%s'%(key,self.sheet.getformula(key))
 
         print self.clipboard,self.clipboard_width,self.clipboard_height,self.clipPos
 

@@ -1,6 +1,6 @@
 from pprint import pprint
 import sys,os,pickle
-import aperiot
+import parser
 from traxcompiler import traverse_tree
 from StupidSheet.backend.cellutils import *
 
@@ -32,15 +32,10 @@ def relOp(*args):
         return str(args[0])
 
 def stringOp(*args):
-    print 'stringOp: ', args
     return r'"%s"'%args[0].string
 
 
 def decompile_token(token):
-        if isinstance (token,aperiot.lexer.Identifier):
-                v=token.symbolic_name.lower()
-                dependencies.add(v)
-                return v
         if isinstance(token,list):
             return apply(operators[token[0]],token[1:])
         return str(token)
@@ -60,17 +55,11 @@ operators={'+':addOp,
            'string':stringOp
            }
 
-def regurgitate_assignment(assignment):
+def regurgitate(assignment):
         '''Takes a single assignment and returns traxter code'''
-        var=assignment[0]
-        code=decompile_token(assignment[1])
-        return '%s=%s'%(var.symbolic_name,code)
-
-def regurgitate(assignlist):
-        '''Takes an assignlist (the output of the trax parser)
-        and produces traxter code.'''
-        return ';'.join([regurgitate_assignment(a) for a in assignlist])
-
+        var=assignment[1]
+        code=decompile_token(assignment[2])
+        return '%s=%s'%(var,code)
 
 
 def displace_cell(token,dx,dy):
@@ -88,36 +77,21 @@ def displace_cell(token,dx,dy):
 
 # FIXME make it less incredibly awful
 def displace_source(source,key_from,key_to):
-        # Basically, I am remplementing aperiot's load_parser
-        # because it's broken when your project is in
-        # more than one folder
-
-        root,ext=os.path.splitext('StupidSheet.compiler.traxter.traxter')
-        package_name = root + '_cfg'
-        temp_table = {}
-        exec "import " + package_name in temp_table
-        package_path = eval(package_name, temp_table).__path__[0]
-        filename = os.path.join(package_path, 'traxter.pkl')
-        file_handler = file(filename, 'r')
-        traxparser = pickle.load(file_handler)
-        file_handler.close()
         x1,y1=keyCoord(key_from)
         x2,y2=keyCoord(key_to)
         dx=x2-x1
         dy=y2-y1
 
         # Traverse formula applying displace_cell
-        tree=traxparser.parse(source)
-        pprint(tree)
-        for assignment in tree:
-                traverse_tree(assignment,displace_cell,[dx,dy])
-                ax,ay=keyCoord(assignment[0].symbolic_name)
-                assignment[0]=aperiot.lexer.Identifier(coordKey(ax+dx,ay+dy))
+        tree=parser.parse(source)
+        traverse_tree([tree[2]],displace_cell,[dx,dy])
+        ax,ay=keyCoord(tree[1])
+        tree[1]=coordKey(ax+dx,ay+dy)
         return regurgitate(tree)
 
 if __name__=="__main__":
         from aperiot.parsergen import build_parser
         #t='A1=SUM(A1:A7);A1=SUM(AVG(A1:A7))*2;A1=$A1+A$1+$A$1+A1;'
         #pprint (regurgitate(traxparser.parse(t)))
-        t='A1="AA";'
+        t='A1=A9'
         pprint (regurgitate(displace_source(t,'A1','B2')))
