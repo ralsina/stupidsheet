@@ -24,7 +24,7 @@ def keyCoord(key):
     return (x,y)
 
 def splitcell(cname):
-    # Sure, this only works for well-formed cellnames ;-)
+    # Sure, this only works for well-formed reative cellnames ;-)
     col=''
     row=''
     for c in cname:

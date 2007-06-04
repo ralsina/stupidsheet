@@ -54,6 +54,7 @@ operators={'+':addOp,
 
 def traverse_tree(tokens,func,extra_args):
         '''applies func to all tokens in a tree'''
+        print 'traverse: ', tokens
         for token in tokens:
                 apply(func,[token]+list(extra_args))
                 if type(token)==list:
