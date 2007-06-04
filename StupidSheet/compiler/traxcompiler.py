@@ -30,7 +30,7 @@ def elemOp(self,*args):
         return str(args[0])
 
 def stringOp(self, *args):
-    return r'"""%s"""'%args[0].string
+    return args[0]
 
 def eqOp(self, *args):
     return '%s==%s'%(self.compile_token(args[0]),self.compile_token(args[1])) 
@@ -62,24 +62,15 @@ def traverse_tree(tokens,func,extra_args):
 
 class Compiler:
         def compile(self,source):
-            print 'Compiling: ', source
-            pprint(source)
             self.dependencies=set()
             parsed=parser.parse(source)
-            print 'Parsed: '
-            pprint(parsed)
-
             currentKey=parsed[1]
             compiled=self.compile_token(parsed[2])
-
-            print 'Compiled: ', currentKey, compiled, self.dependencies
             return currentKey, compiled, self.dependencies
 
         def compile_token(self,token):
                 if isinstance(token,list):
-                    print 'Compiling token: ', token
                     return apply(operators[token[0]],[self]+token[1:])
-                print 'Passing token: ', token
                 return str(token)
 
         
@@ -97,8 +88,8 @@ if __name__=="__main__":
         pprint (c.compile(t))
         print
         print
-#        t='A1="Hello world!"'
-#        pprint (c.compile(t))
+        t='A1="Hello world!"'
+        pprint (c.compile(t))
         print
         print
         t='A1=$A1+A$1+$A$1+A1'
