@@ -1,5 +1,4 @@
 from pprint import pprint
-import aperiot.lexer as lexer
 
 def isKey(key):
     if (key[0].isalpha() and key[1:].isdigit()) or (key[0:1].isalpha() and key[2:].isdigit()):
@@ -42,7 +41,7 @@ def cellrange(start,end):
     res=[]
     for col in xrange(sc,ec+1):
         for row in xrange(sr,er+1):
-                res.append(lexer.Identifier(coordKey(col,row)))
+                res.append(['cell', coordKey(col,row)])
 
     return res
 
