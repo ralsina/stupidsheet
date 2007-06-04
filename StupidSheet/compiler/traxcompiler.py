@@ -33,6 +33,9 @@ def stringOp(self, *args):
     return args[0]
 
 def boolOp(self, *args):
+    print "boolop: ",self.compile_token(args[1]),\
+                     self.compile_token(args[0]),\
+                     self.compile_token(args[2]),args
     return '%s%s%s'%(self.compile_token(args[1]),
                      self.compile_token(args[0]),
                      self.compile_token(args[2]))
@@ -99,4 +102,8 @@ if __name__=="__main__":
         print
         print
         t='A1=IF(A2=A1, 1, IF(A2<A1,0,1))'
+        pprint (c.compile(t))
+        print
+        print
+        t='A1=IF(b5<=10,b5,"Maximum")'
         pprint (c.compile(t))

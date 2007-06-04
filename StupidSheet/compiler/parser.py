@@ -141,13 +141,13 @@ def p_bool_gt(p):
     p[0] = ['bool','>',p[1],p[3]]
 def p_bool_le(p):
     'bool : expression LT EQUAL expression'
-    p[0] = ['bool','<=',p[1],p[3]]
+    p[0] = ['bool','<=',p[1],p[4]]
 def p_bool_ge(p):
     'bool : expression GT EQUAL expression'
-    p[0] = ['bool','>=',p[1],p[3]]
+    p[0] = ['bool','>=',p[1],p[4]]
 def p_bool_ne(p):
     'bool : expression LT GT expression'
-    p[0] = ['bool','<>',p[1],p[3]]
+    p[0] = ['bool','<>',p[1],p[4]]
 
 def p_expression_plus(p):
     'expression : expression PLUS term'
