@@ -1,6 +1,5 @@
 from pprint import pprint
-from aperiot.parsergen import load_parser
-import aperiot
+import parser
 from StupidSheet.backend.cellutils import *
 import pickle
 import sys,os
@@ -33,6 +32,9 @@ def elemOp(self,*args):
 def stringOp(self, *args):
     return r'"""%s"""'%args[0].string
 
+def eqOp(self, *args):
+    return '%s==%s'%(self.compile_token(args[0]),self.compile_token(args[1])) 
+
 operators={'+':addOp,
            '-':subOp,
            '*':mulOp,
@@ -45,7 +47,8 @@ operators={'+':addOp,
            'abscol':elemOp,
            'relrow':elemOp,
            'absrow':elemOp, 
-           'string':stringOp
+           'string':stringOp, 
+           '==':eqOp
            }
 
 
@@ -57,63 +60,49 @@ def traverse_tree(tokens,func,extra_args):
                         traverse_tree(token,func,extra_args)
 
 class Compiler:
-        def __init__(self):
-                self.dependencies=set()
-
-                # Basically, I am remplementing aperiot's load_parser
-                # because it's broken when your project is in
-                # more than one folder
-
-                root,ext=os.path.splitext('StupidSheet.compiler.traxter.traxter')
-                package_name = root + '_cfg'
-                temp_table = {}
-                exec "import " + package_name in temp_table
-                package_path = eval(package_name, temp_table).__path__[0]
-                filename = os.path.join(package_path, 'traxter.pkl')
-                file_handler = file(filename, 'r')
-                self.parser = pickle.load(file_handler)
-                file_handler.close()
-
         def compile(self,source):
-            compiled={}
-            assign_list=self.parser.parse(source)
-            for assignment in assign_list:
-                    pprint(assignment)
-                    self.dependencies=set()
-                    var,c=self.compile_assignment(assignment)
-                    compiled[var]=[c,self.dependencies]
-            return compiled
+            print 'Compiling: ', source
+            pprint(source)
+            self.dependencies=set()
+            parsed=parser.parse(source)
+            print 'Parsed: '
+            pprint(parsed)
+
+            currentKey=parsed[1]
+            compiled=self.compile_token(parsed[2])
+
+            print 'Compiled: ', currentKey, compiled, self.dependencies
+            return currentKey, compiled, self.dependencies
 
         def compile_token(self,token):
-                if isinstance (token,aperiot.lexer.Identifier):
-                    self.dependencies.add(token.symbolic_name.lower())
-                    return token.symbolic_name.lower()
                 if isinstance(token,list):
+                    print 'Compiling token: ', token
                     return apply(operators[token[0]],[self]+token[1:])
+                print 'Passing token: ', token
                 return str(token)
 
-        def compile_assignment(self,tokens):
-                currentKey=tokens[0].symbolic_name
-                compiled=self.compile_token(tokens[1])
-                return currentKey,compiled
-
+        
 if __name__=="__main__":
         c=Compiler()
-        t='A1=SUM(A1:A7, C3:C9);'
+        t='A1=SUM(A1:A7, C3:C9)'
         pprint (c.compile(t))
         print
         print
-        t='A1=SUM(A1:A7);'
+        t='A1=SUM(A1:A7)'
         pprint (c.compile(t))
         print
         print
-        t='A1=SUM(AVG(A1:A7))*2;'
+        t='A1=SUM(AVG(A1:A7))*2'
         pprint (c.compile(t))
         print
         print
-        t='A1=$A1+A$1+$A$1+A1;'
+#        t='A1="Hello world!"'
+#        pprint (c.compile(t))
+        print
+        print
+        t='A1=$A1+A$1+$A$1+A1'
         pprint (c.compile(t))
         print
         print
-        t='A1="Hello world!";'
+        t='A1=IF(A2=A1, 1, 0)'
         pprint (c.compile(t))
