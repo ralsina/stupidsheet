@@ -14,4 +14,6 @@ def SUM(*args):
 
 def IF(*args):
     cond, t, f=args
-    print cond, t, f
+    if cond:
+        return t
+    return f
