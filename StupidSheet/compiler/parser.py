@@ -1,5 +1,6 @@
 import ply.lex as lex
 from pprint import pprint
+import re
 
 # List of token names.   This is always required
 tokens = (
@@ -28,6 +29,19 @@ def t_CELL(t):
     t.type='CELL'
     return t
 
+def parse_cell(c):
+    r=re.compile(r'(\${0,1}[a-zA-Z]{1,2})(\${0,1}[0-9]{1,5})')
+    _, col, row, _=r.split(c)
+    if col[0]=='$':
+        col=['abscol', col[1:]]
+    else:
+        col=['relcol', col]
+    if row[0]=='$':
+        row=['absrow', row[1:]]
+    else:
+        row=['relrow', row]
+    return ['cell', col, row]
+    
 def t_ID(t):
     r'[a-zA-Z][a-zA-Z_0-9]*'
     t.type = 'ID'
@@ -94,7 +108,7 @@ def p_arglist_expression(p):
 def p_arglist_range(p):
     'arglist : RANGE'
     c1, c2=p[1].split(':')    
-    p[0] = [['range', ['cell', c1], ['cell', c2]]]
+    p[0] = ['range', parse_cell(c1),parse_cell(c2)]
 
 def p_arglist_bool(p):
     'arglist : bool'
@@ -140,9 +154,11 @@ def p_factor_funcall(p):
     'factor : funcall'
     p[0] = p[1]
 
+    
+
 def p_factor_cell(p):
     'factor : CELL'
-    p[0] = ['cell', p[1]]
+    p[0] = parse_cell(p[1])
 
 def p_factor_id(p):
     'factor : ID'
