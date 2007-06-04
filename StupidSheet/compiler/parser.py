@@ -1,8 +1,15 @@
 import ply.lex as lex
+import ply.yacc as yacc
 from pprint import pprint
 import re
 
-# List of token names.   This is always required
+
+#########################
+#
+# LEX
+#
+#########################
+
 tokens = (
    'NUMBER',
    'PLUS',
@@ -17,7 +24,9 @@ tokens = (
    'ID', 
    'CELL',
    'STRING', 
-   'SEMICOLON' 
+   'SEMICOLON',
+   'LT',
+   'GT'
 )
 
 def t_RANGE(t):
@@ -50,7 +59,7 @@ def t_ID(t):
 
 # Regular expression rules for simple tokens
 t_PLUS    = r'\+'
-t_EQUAL  = r'\='
+t_EQUAL   = r'\='
 t_MINUS   = r'-'
 t_TIMES   = r'\*'
 t_DIVIDE  = r'/'
@@ -59,6 +68,8 @@ t_RPAREN  = r'\)'
 t_COMMA   = r'\,'
 t_SEMICOLON   = r'\;'
 t_STRING  = r'\"[^"]*\"'
+t_LT      = r'\<'
+t_GT      = r'\>'
 
 # A regular expression rule with some action code
 def t_NUMBER(t):
@@ -87,9 +98,12 @@ def t_error(t):
 #lex.lex(debug=1)
 lex.lex()
 
-# Yacc example
+#########################
+#
+# YACC
+#
+#########################
 
-import ply.yacc as yacc
 
 def p_assignment(p):
     'assignment : CELL EQUAL expression'
@@ -118,7 +132,22 @@ def p_arglist_bool(p):
 
 def p_bool_equal(p):
     'bool : expression EQUAL expression'
-    p[0] = ['==',p[1],p[3]]
+    p[0] = ['bool','==',p[1],p[3]]
+def p_bool_lt(p):
+    'bool : expression LT expression'
+    p[0] = ['bool','<',p[1],p[3]]
+def p_bool_gt(p):
+    'bool : expression GT expression'
+    p[0] = ['bool','>',p[1],p[3]]
+def p_bool_le(p):
+    'bool : expression LT EQUAL expression'
+    p[0] = ['bool','<=',p[1],p[3]]
+def p_bool_ge(p):
+    'bool : expression GT EQUAL expression'
+    p[0] = ['bool','>=',p[1],p[3]]
+def p_bool_ne(p):
+    'bool : expression LT GT expression'
+    p[0] = ['bool','<>',p[1],p[3]]
 
 def p_expression_plus(p):
     'expression : expression PLUS term'

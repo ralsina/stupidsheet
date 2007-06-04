@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE Project SYSTEM "Project-4.0.dtd">
-<!-- eric4 project file for project Stupid Sheet -->
-<!-- Saved: 2007-05-30, 11:28:27 -->
+<!-- eric4 project file for project StupidSheet -->
+<!-- Saved: 2007-06-04, 15:16:54 -->
 <!-- Copyright (C) 2007 Roberto Alsina, ralsina@kde.org -->
 <Project version="4.0">
   <ProgLanguage mixed="0">Python</ProgLanguage>
@@ -114,6 +114,11 @@
       <Dir>StupidSheet</Dir>
       <Dir>compiler</Dir>
       <Name>traxter.apr</Name>
+    </Source>
+    <Source>
+      <Dir>StupidSheet</Dir>
+      <Dir>compiler</Dir>
+      <Name>parser.py</Name>
     </Source>
   </Sources>
   <Forms>
