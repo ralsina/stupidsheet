@@ -72,38 +72,50 @@ class Compiler:
             currentKey=parsed[1]
             compiled=self.compile_token(parsed[2])
             return currentKey, compiled, self.dependencies
+        def compile_c(self, source):
+            print "Compiling: ", source
+            c=self.compile(source)
+            code="double %s (%s) { return %s; }"%(c[0], ','.join(['double '+x for x in list(c[2])]), c[1])
+            return c[0], code, c[2]
 
         def compile_token(self,token):
                 if isinstance(token,list):
                     return apply(operators[token[0]],[self]+token[1:])
                 return str(token)
-
+        
         
 if __name__=="__main__":
         c=Compiler()
         t='A1=SUM(A1:A7, C3:C9)'
         pprint (c.compile(t))
+        print compile_c(c.compile(t))
         print
         print
         t='A1=SUM(A1:A7)'
         pprint (c.compile(t))
+        print compile_c(c.compile(t))
         print
         print
         t='A1=SUM(AVG(A1:A7))*2'
         pprint (c.compile(t))
+        print compile_c(c.compile(t))
         print
         print
         t='A1="Hello world!"'
         pprint (c.compile(t))
+        print compile_c(c.compile(t))
         print
         print
         t='A1=$A1+A$1+$A$1+A1'
         pprint (c.compile(t))
+        print compile_c(c.compile(t))
         print
         print
         t='A1=IF(A2=A1, 1, IF(A2<A1,0,1))'
         pprint (c.compile(t))
+        print compile_c(c.compile(t))
         print
         print
         t='A1=IF(b5<=10,b5,"Maximum")'
         pprint (c.compile(t))
+        print compile_c(c.compile(t))
