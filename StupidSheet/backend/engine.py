@@ -1,11 +1,28 @@
 import math
-import sys
+import sys, os
 from StupidSheet.compiler.traxcompiler import Compiler
 from StupidSheet.compiler.traxdecompiler import displace_source
 from PyQt4 import QtGui, QtCore
 from graph_lib import *
 import StupidSheet.backend.functions as functions
 from StupidSheet.backend.cellutils import *
+from instant import instant
+
+def inline(c_code):
+    # This is a bug in instant, it changes the CWD
+    cwd=os.getcwd()
+    ext = instant()
+    func = c_code[:c_code.index('(')]
+    ret, func_name = func.split()
+    ext.create_extension(code=c_code, module="inline_ext_"+func_name)
+    try:
+        exec ("del inline_ext_%s"%func_name)
+    except NameError:
+        pass
+    exec("from inline_ext_%s import %s as func_name"%(func_name, func_name) )
+    os.chdir(cwd)
+    return func_name
+   
 
 class SpreadSheet(QtCore.QObject):
     _cells = {}
@@ -17,15 +34,16 @@ class SpreadSheet(QtCore.QObject):
         QtCore.QObject.__init__(self,parent)
         for name in dir(functions):
                 self.tools[name]=eval('functions.'+name)
+                self.tools['inline']=inline
                 
 
     def __setitem__(self, key, formula):
         key=key.lower()
-        key, code, deps =self.compiler.compile('%s=%s'%(key,formula))
-        print key, code, deps
-        self._cells[key] = [code,
+        key, code, deps =self.compiler.compile_c('%s=%s'%(key,formula))
+        print "KCD: ", key, code, deps
+        self._cells[key] = [inline(code),
                             False,
-                            compile(code,"Formula for %s"%key,'eval'),
+                            ','.join(deps),
                             formula]
         # Dependency graph
         if not self.graph.has_node(key):
@@ -66,9 +84,9 @@ class SpreadSheet(QtCore.QObject):
         if self._cells[key][1]:
             return "ERROR: cyclic dependency"
         else:
-            print 'evaluating [%s]: '%key,type(self._cells[key][0]),self._cells[key][0]
-            print self._cells[key][0]
-            r=eval(self._cells[key][0], self.tools, self)
+            print 'evaluating [%s]: '%key,type(self._cells[key][0]),self._cells[key]
+            self.tools['__funct__']=self._cells[key][0]
+            r=eval('__funct__(%s)'%self._cells[key][2], self.tools, self)
             print r
             return r
 
